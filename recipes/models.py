@@ -16,22 +16,22 @@ class Recipe(models.Model):
 	# likes = models.PositiveIntegerField() #jako zlicznie ilosci lajkow
 
 	def __str__(self):
-		return self.name
+		return f'Recipe {self.pk}'
 
 
 class Ingredient(models.Model):
-	name = models.CharField(max_length=128)
-	unit = models.ForeignKey('IngredientUnit', on_delete=models.CASCADE) # jak z default?
-	category = models.ForeignKey('IngredientCategory', on_delete=models.CASCADE)
+	name = models.CharField(max_length=128, unique=True)
+	unit = models.ForeignKey('IngredientUnit', on_delete=models.SET_NULL, blank=True, null=True)
+	category = models.ForeignKey('IngredientCategory', on_delete=models.SET_NULL, blank=True, null=True)
 
 	def __str__(self):
 		return f'{self.name} ({self.unit})'
 
 
 class RecipeIngredient(models.Model):
-	recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)  #?czy cascade?
-	ingredient = models.ForeignKey('Ingredient', on_delete=models.CASCADE)  # ?czy cascade?
-	quantity = models.DecimalField(max_digits=7, decimal_places=2) #jak zrobić suppress trailing zero?
+	recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
+	ingredient = models.ForeignKey('Ingredient', on_delete=models.SET_NULL, blank=True, null=True)
+	quantity = models.DecimalField(max_digits=7, decimal_places=2)
 
 	def __str__(self):
 		return f'{self.recipe}: {self.ingredient} {self.quantity}'
