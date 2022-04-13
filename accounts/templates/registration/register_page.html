@@ -7,10 +7,10 @@
 <body>
     Strona do rejestracji.
 
-    <form method="POST">{% csrf_token %}
-
+    <form method="POST">
+        {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Zarejestruj">
+        <input type="submit" value="Register">
 
           {% if form.error %}
     {% for field in form %}
