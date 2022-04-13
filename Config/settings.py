@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    ###
-    ###
+    'social_django',
     'accounts',
     'core',
     'recipes',
@@ -67,6 +66,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # social django additions
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -127,5 +130,22 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+# After which time cookies will expire set in seconds. Math used is for 7 days. Days * hours in day... etc
+SESSION_COOKIE_AGE = 7 * 24 * 60 * 60
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# social auth configs
+SOCIAL_AUTH_GITHUB_KEY = '0ebffab6e778d48dae49'
+SOCIAL_AUTH_GITHUB_SECRET = '63ab03f9fdb8220d0deb024ccf04b994fa6c008f'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '167726798730-dm9l68gtidrqnvftidp7n2m5966tcugh.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
