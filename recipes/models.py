@@ -14,6 +14,7 @@ class Recipe(models.Model):
 	# DODATKOWE
 	# tags = models.ManyToMany(...) #jako osobna apka??
 	# likes = models.PositiveIntegerField() #jako zlicznie ilosci lajkow
+	# rating = models.PositiveIntegerField(min_value=1, max_value=5) #jako rating
 
 	def __str__(self):
 		return f'Recipe {self.pk}'
@@ -32,6 +33,9 @@ class RecipeIngredient(models.Model):
 	recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
 	ingredient = models.ForeignKey('Ingredient', on_delete=models.SET_NULL, blank=True, null=True)
 	quantity = models.DecimalField(max_digits=7, decimal_places=2)
+
+	class Meta:
+		unique_together = [['recipe', 'ingredient']]
 
 	def __str__(self):
 		return f'{self.recipe}: {self.ingredient} {self.quantity}'

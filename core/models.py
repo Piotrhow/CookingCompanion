@@ -26,6 +26,9 @@ class PantryIngredient(models.Model):
 	ingredient = models.ForeignKey(Ingredient, on_delete=models.SET_NULL, blank=True, null=True)
 	quantity = models.DecimalField(max_digits=7, decimal_places=2)
 
+	class Meta:
+		unique_together = [['pantry', 'ingredient']]
+
 	def __str__(self):
 		return f'{self.pantry}: {self.ingredient} {self.quantity}'
 
