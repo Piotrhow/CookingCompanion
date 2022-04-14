@@ -2,10 +2,8 @@ from django.urls import path, include, re_path
 from .views import home, RegisterView
 from django.contrib.auth import views as auth_views
 
-
 from accounts.views import CustomLoginView
 from accounts.forms import LoginForm
-
 
 
 urlpatterns = [
