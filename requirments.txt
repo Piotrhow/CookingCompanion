@@ -2,3 +2,4 @@ django
 pip-chill
 python-dotenv
 social-auth-app-django
+pillow

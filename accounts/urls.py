@@ -1,5 +1,5 @@
 from django.urls import path, include, re_path
-from .views import home, RegisterView, ResetPasswordView
+from .views import home, RegisterView, ResetPasswordView, ChangePasswordView
 from django.contrib.auth import views as auth_views
 
 from accounts.views import CustomLoginView
@@ -23,6 +23,7 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'),
          name='password_reset_complete'),
     path('/profile/', profile, name='users-profile'),
+    path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 ]
 
 
