@@ -23,5 +23,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('', include('accounts.urls')),
+    path('recipes/', include('recipes.urls')),
+    # path('core/', include('core.urls')),
+    #
+    #
     #
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

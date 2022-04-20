@@ -1,0 +1,41 @@
+{% extends "recipes/base.html" %}
+
+{% block recipe_content %}
+  <h1> {{recipe.name}} </h1>
+  <h2>INGREDIENTS:</h2>
+  <div>
+    <ol>
+      {% for recipe_ingredient in recipe_ingredients %}
+      <li>
+        {{ recipe_ingredient }}
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+  <p> </p>
+  <p> </p>
+  <h2>DESCRIPTION:</h2>
+
+  <div>
+    <p>{{ recipe.description }}</p>
+  </div>
+
+<!--CHOOSE THE RECIPE->-->
+  <div>
+    <h5>
+      Like this recipe?
+      <h6>Awesome! Let's see what you need to buy to prepare it:
+      <a href="{% url 'recipes:recipe-check' %}">check</a>!</h6>
+    </h5>
+  </div>
+
+<!--RETURN->-->
+  <div>
+    <h5>
+      Want to keep looking?
+      <h6>No problem, let's go back to the
+      <a href="{% url 'recipes:recipe-list' %}">list</a>!</h6>
+    </h5>
+  </div>
+
+{% endblock %}
