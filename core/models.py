@@ -7,7 +7,7 @@ from recipes.models import Ingredient
 class Pantry(models.Model):
 	added = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
-	pantryusertest = models.OneToOneField('PantryUserTest', on_delete=models.CASCADE)  # relacja z userem !!!
+	pantryusertest = models.OneToOneField('PantryUserTest', on_delete=models.CASCADE)  # relacja z USEREM !!!
 	ingredients = models.ManyToManyField(
 		Ingredient,
 		through='PantryIngredient',

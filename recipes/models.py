@@ -17,7 +17,7 @@ class Recipe(models.Model):
 	# rating = models.PositiveIntegerField(min_value=1, max_value=5) #jako rating
 
 	def __str__(self):
-		return f'Recipe {self.pk}'
+		return f'Recipe {self.name}'
 
 
 class Ingredient(models.Model):
@@ -38,7 +38,7 @@ class RecipeIngredient(models.Model):
 		unique_together = [['recipe', 'ingredient']]
 
 	def __str__(self):
-		return f'{self.recipe}: {self.ingredient} {self.quantity}'
+		return f'{self.ingredient} {self.quantity}'
 
 
 class IngredientUnit(models.Model):
