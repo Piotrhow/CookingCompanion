@@ -1,6 +1,7 @@
 {% extends "recipes/base.html" %}
+{% block title %} Recipe List {% endblock title%}
 
-{% block recipe_content %}
+{% block recipe_list %}
   <h1>RECIPE LIST:</h1>
   <h3><ol>
     {% for recipe in recipe_list %}

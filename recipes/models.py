@@ -17,7 +17,7 @@ class Recipe(models.Model):
 	# rating = models.PositiveIntegerField(min_value=1, max_value=5) #jako rating
 
 	def __str__(self):
-		return f'Recipe {self.name}'
+		return f'{self.name}'
 
 
 class Ingredient(models.Model):
