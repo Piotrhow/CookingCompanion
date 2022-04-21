@@ -7,7 +7,8 @@ app_name = 'core'
 
 urlpatterns = [
 	path('pantry-detail/', views.pantry_detail, name='pantry-detail'),
-    #
+	path('create/', views.pantryingredient_create, name='create'),
+	path('delete/<int:pk>/', views.pantryingredient_delete, name='delete'),
     #
 ]
 

@@ -1,0 +1,14 @@
+{% extends "core/pantry_detail.html" %}
+{% block pantryingredient_form %}
+
+</br>
+</br>
+  <h5>ADD AN INGREDIENT</h5>
+  <form method="POST">{% csrf_token %}
+      <input type="number" name="ingredient_id" placeholder="ingredient_id">
+      <input type="number" name="quantity" placeholder="quantity">
+      <input type="submit" value="Add" class="btn btn-info">
+  </form>
+<!--  <a href="{% url 'core:pantry-detail' %}"><button>Wróc do listy</button></a>-->
+
+{% endblock %}

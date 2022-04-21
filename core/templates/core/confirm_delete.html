@@ -1,0 +1,12 @@
+{% extends "core/pantry_detail.html" %}
+{% block title %} Confirm delete {% endblock %}
+
+{% block pantryingredient_form %}
+  <h2>Deleting an ingredient...</h2>
+  <form method="POST" style="display: inline;">{% csrf_token %}
+    <p>Are you sure you want to delete this from your pantry ?</p>
+    <input type="submit" value="Delete">
+  </form>
+  <a href="{% url 'core:pantry-detail' %}"><button>Go back</button></a>
+
+{% endblock %}

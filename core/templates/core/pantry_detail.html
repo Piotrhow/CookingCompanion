@@ -2,12 +2,10 @@
 {% block title %} Pantry of {{user.username}}  {% endblock title%}
 
 {% block content %}
+<br />
   <h1>WELCOME TO YOUR PANTRY !</h1>
 
-  <div>
-<!--    {% if {{pantry}}-->
-
-  </div>
+<br />
 
   <div>
     {% if pantry_ingredients %}
@@ -15,16 +13,16 @@
     {% else %}
       {{ empty_msg }}
     {% endif %}
-    <ol>
+    <h6><ol>
       {% for pantry_ingredient in pantry_ingredients %}
       <li>
         {{ pantry_ingredient }}
+        <a href="{% url 'core:delete' pantry_ingredient.id %}"><button class="btn btn-danger">Delete</button></a>
       </li>
       {% endfor %}
-    </ol>
+    </ol></h6>
   </div>
-
-
+    <a href="{% url 'core:create' %}"><button class="btn btn-light">Add something</button></a>
   <p> </p>
   <p> </p>
 
