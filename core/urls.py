@@ -6,7 +6,8 @@ from django.views.generic import TemplateView
 app_name = 'core'
 
 urlpatterns = [
-	# path('pantry/', views.pantry, name='pantry'),
-    #path('shopping-list/', views.shopping_list, name='shopping_list'),
+	path('pantry-detail/', views.pantry_detail, name='pantry-detail'),
+    #
     #
 ]
+
