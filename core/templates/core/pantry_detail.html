@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% block title %} Pantry of {{user.username}}  {% endblock title%}
+
+{% block content %}
+  <h1>WELCOME TO YOUR PANTRY !</h1>
+
+  <div>
+<!--    {% if {{pantry}}-->
+
+  </div>
+
+  <div>
+    {% if pantry_ingredients %}
+      <h3>YOUR PRODUCTS:</h3>
+    {% else %}
+      {{ empty_msg }}
+    {% endif %}
+    <ol>
+      {% for pantry_ingredient in pantry_ingredients %}
+      <li>
+        {{ pantry_ingredient }}
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+
+
+  <p> </p>
+  <p> </p>
+
+
+
+{% endblock %}
