@@ -2,12 +2,23 @@
 {% block pantryingredient_form %}
 
 </br>
-</br>
   <h5>ADD AN INGREDIENT</h5>
-  <form method="POST">{% csrf_token %}
-      <input type="number" name="ingredient_id" placeholder="ingredient_id">
+    {% if flag == 1 %}
+    <p> {{ duplicate_msg }} </p>
+    {% endif %}
+
+  <form method="POST" class="form-inline" role="form">{% csrf_token %}
+    <div class="input-group">
+      <select name="ingredient_name" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+          <option selected>choose an ingredient...</option>
+          {% for ingredient in ingredients %}
+          <option value="{{ingredient.name}}">{{ingredient}}</option>
+          {% endfor %}
+        </select>
+    </div>
+<!--      <input type="text" name="ingredient_name" placeholder="ingredient name">-->
       <input type="number" name="quantity" placeholder="quantity">
-      <input type="submit" value="Add" class="btn btn-info">
+      <input type="submit" value="Add" class="btn btn-info btn-sm">
   </form>
 <!--  <a href="{% url 'core:pantry-detail' %}"><button>Wróc do listy</button></a>-->
 
