@@ -17,7 +17,6 @@ def pantry_detail(request):
 	if request.user.is_authenticated:
 		id = request.user.id
 		p = get_object_or_404(Pantry, user_id=id)
-		print(f"Username --> {request.user.username}")
 	else:
 		return redirect('/login')
 
@@ -25,7 +24,6 @@ def pantry_detail(request):
 	pi = PantryIngredient.objects.filter(pantry_id=pantry_id)
 	# ingredient_category = IngredientCategory.objects.all()
 	ingredients = Ingredient.objects.all()
-	print(ingredients)
 
 	return render(
 		request,
@@ -53,7 +51,6 @@ def pantryingredient_create(request):
 	pi = PantryIngredient.objects.filter(pantry_id=pantry_id)
 	flag = 0
 	ingredients = Ingredient.objects.all()
-	print(ingredients)
 
 	if ingredient_name and quantity:
 		ingredient = Ingredient.objects.filter(name=ingredient_name.lower()).first()
@@ -75,6 +72,7 @@ def pantryingredient_create(request):
 		'core/pantryingredient_form.html',
 		context={
 			'pantry': p,
+			'pantry_id': pantry_id,
 			'pantry_ingredients': pi,
 			'id': id,
 			'empty_msg': EMPTY_MSG,
@@ -84,7 +82,7 @@ def pantryingredient_create(request):
 		}
 	)
 
-# DELETE
+# DELETE AN INGREDIENT
 def pantryingredient_delete(request, pk):
 	pi = PantryIngredient.objects.filter(pk=pk)
 
@@ -97,6 +95,32 @@ def pantryingredient_delete(request, pk):
 		'core/confirm_delete.html',
 		context={
 			'pantryingredient': pi,
+		}
+	)
+
+# UPDATE AN INGREDIENT AMOUNT
+def pantryingredient_update(request, pk):
+	# id = request.user.id
+	# p = get_object_or_404(Pantry, user_id=id)
+	# pi_all = PantryIngredient.objects.filter(pantry_id=p.id)
+
+	pi = get_object_or_404(PantryIngredient, pk=pk)
+	ingredient = get_object_or_404(Ingredient, id=pi.ingredient_id)
+	quantity_old = pi.quantity
+	modified_pi = request.POST.get("quantity") #pobieranie od usera
+
+	if modified_pi:
+		pi.quantity = modified_pi
+		pi.save()
+		return redirect('core:pantry-detail')
+
+	return render(
+		request,
+		'core/pantryingredient_form_update.html',
+		context={
+			# 'pantry_ingredients': pi_all, #jeżeli nie będzie to nie pokaże listy
+			'ingredient': ingredient,
+			'quantity_old': quantity_old,
 		}
 	)
 

@@ -1,0 +1,19 @@
+{% extends "core/pantry_detail.html" %}
+{% block pantryingredient_form %}
+
+</br>
+  <h5>UPDATE AN INGREDIENT QUANTITY</h5>
+
+  <form method="POST" class="form-inline" role="form">{% csrf_token %}
+    <div class="input-group">
+      <select name="ingredient_name" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon" disabled>
+          <option selected>{{ingredient}}</option>
+        </select>
+    </div>
+<!--      <input type="text" name="ingredient_name" placeholder="ingredient name">-->
+      <input type="number" name="quantity" placeholder="{{quantity_old}}">
+      <input type="submit" value="Update" class="btn btn-warning btn-sm">
+  </form>
+      <a href="{% url 'core:pantry-detail' %}" ><button class="btn btn-secondary btn-sm">Wróc do listy</button></a>
+
+{% endblock %}
