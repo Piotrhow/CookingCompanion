@@ -23,18 +23,14 @@ def pantry_detail(request):
 	pantry_id = p.id
 	pi = PantryIngredient.objects.filter(pantry_id=pantry_id)
 	# ingredient_category = IngredientCategory.objects.all()
-	ingredients = Ingredient.objects.all()
 
 	return render(
 		request,
 		'core/pantry_detail.html',
 		context={
-			'pantry': p,
 			'pantry_ingredients': pi,
-			'id': id,
 			'empty_msg': EMPTY_MSG,
 			# 'ingredient_category': ingredient_category,
-			'ingredients': ingredients,
 		}
 	)
 
@@ -42,20 +38,21 @@ def pantry_detail(request):
 # CREATE PANTRY INGREDIENT
 def pantryingredient_create(request):
 	# ingredient_category = (request.POST.get('ingredient_category')) #pobieranie od usera
+
 	ingredient_name = (request.POST.get('ingredient_name')) #pobieranie od usera
 	quantity = request.POST.get('quantity') #pobieranie od usera
-	id = request.user.id
 
+	id = request.user.id
 	p = get_object_or_404(Pantry, user_id=id)
 	pantry_id = p.id
-	pi = PantryIngredient.objects.filter(pantry_id=pantry_id)
+	pi_all = PantryIngredient.objects.filter(pantry_id=pantry_id)
 	flag = 0
 	ingredients = Ingredient.objects.all()
 
 	if ingredient_name and quantity:
 		ingredient = Ingredient.objects.filter(name=ingredient_name.lower()).first()
-		# category = IngredientCategory.objects.filter(name=ingredient_category.lower()).first()
 		ingredient_id = ingredient.id
+		# category = IngredientCategory.objects.filter(name=ingredient_category.lower()).first()
 		# category_id = category.id
 		try:
 			PantryIngredient.objects.create(
@@ -71,10 +68,7 @@ def pantryingredient_create(request):
 		request,
 		'core/pantryingredient_form.html',
 		context={
-			'pantry': p,
-			'pantry_id': pantry_id,
-			'pantry_ingredients': pi,
-			'id': id,
+			'pantry_ingredients': pi_all, #jeżeli nie będzie tego - to nie pokaże listy
 			'empty_msg': EMPTY_MSG,
 			'duplicate_msg': DUPLICATE_MSG,
 			'flag': flag,
@@ -118,7 +112,7 @@ def pantryingredient_update(request, pk):
 		request,
 		'core/pantryingredient_form_update.html',
 		context={
-			# 'pantry_ingredients': pi_all, #jeżeli nie będzie to nie pokaże listy
+			# 'pantry_ingredients': pi_all, #jeżeli nie będzie tego - to nie pokaże listy
 			'ingredient': ingredient,
 			'quantity_old': quantity_old,
 		}
