@@ -78,7 +78,8 @@ def pantryingredient_create(request):
 
 # DELETE AN INGREDIENT
 def pantryingredient_delete(request, pk):
-	pi = PantryIngredient.objects.filter(pk=pk)
+	pi = get_object_or_404(PantryIngredient, pk=pk)
+	ingredient = get_object_or_404(Ingredient, id=pi.ingredient_id)
 
 	if request.method == "POST":
 		pi.delete()
@@ -89,6 +90,7 @@ def pantryingredient_delete(request, pk):
 		'core/confirm_delete.html',
 		context={
 			'pantryingredient': pi,
+			'ingredient': ingredient,
 		}
 	)
 
