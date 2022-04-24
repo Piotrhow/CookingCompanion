@@ -12,15 +12,22 @@
     {% else %}
       {{ empty_msg }}
     {% endif %}
-    <h6><ol class="list-group list-group-flush">
-      {% for pantry_ingredient in pantry_ingredients %}
-      <li class="list-group-item">
-        {{ pantry_ingredient }}
-        <a href="{% url 'core:delete' pantry_ingredient.id %}"><button class="btn btn-danger btn-sm">Delete</button></a>
-        <a href="{% url 'core:update' pantry_ingredient.id %}"><button class="btn btn-warning btn-sm">Modify quantity</button></a>
-      </li>
+
+    <ol class="list-group list-group-flush">
+      {% for category in categories_all %}
+      <br />
+        <div class="container"><b>{{ category }}</b>
+          {% for pantry_ingredient in pantry_ingredients %}
+            {% if category.id == pantry_ingredient.ingredient.category_id %}
+              <p><li class="list-group-item">
+                {{ pantry_ingredient }}
+                <a href="{% url 'core:delete' pantry_ingredient.id %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                <a href="{% url 'core:update' pantry_ingredient.id %}"><button class="btn btn-warning btn-sm">Modify quantity</button></a>
+              </li>
+            {% endif %}
+          {% endfor %}</p></div>
       {% endfor %}
-    </ol></h6>
+    </ol>
   </div>
     <a href="{% url 'core:create' %}"><button class="btn btn-light">Add something new</button></a>
 </br>

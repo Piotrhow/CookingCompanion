@@ -11,6 +11,7 @@ from recipes.models import Ingredient, IngredientCategory
 EMPTY_MSG = 'It looks like you don\'t have anything yet.'
 DUPLICATE_MSG = 'It looks like you already have that item. Try updating the existing amount instead.'
 
+
 # Create your views here.
 def pantry_detail(request):
 
@@ -21,16 +22,16 @@ def pantry_detail(request):
 		return redirect('/login')
 
 	pantry_id = p.id
-	pi = PantryIngredient.objects.filter(pantry_id=pantry_id)
-	# ingredient_category = IngredientCategory.objects.all()
+	pi_all = PantryIngredient.objects.filter(pantry_id=pantry_id)
+	categories_all = IngredientCategory.objects.all()
 
 	return render(
 		request,
 		'core/pantry_detail.html',
 		context={
-			'pantry_ingredients': pi,
+			'pantry_ingredients': pi_all,
 			'empty_msg': EMPTY_MSG,
-			# 'ingredient_category': ingredient_category,
+			'categories_all': categories_all,
 		}
 	)
 
