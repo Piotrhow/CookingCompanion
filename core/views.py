@@ -39,44 +39,52 @@ def pantry_detail(request):
 
 # CREATE PANTRY INGREDIENT
 def pantryingredient_create(request):
-
 	id = request.user.id
 	p = get_object_or_404(Pantry, user_id=id)
 	pantry_id = p.id
-	pi_all = PantryIngredient.objects.filter(pantry_id=p.id)
+
 	ingredients = Ingredient.objects.all()
 	categories_all = IngredientCategory.objects.all()
 
-	# flag = 0
+	ingredient_category = (request.GET.get('ingredient_category'))  # pobieranie od usera
+	ingredient_name = (request.GET.get('ingredient_name'))  # pobieranie od usera
+
 
 	if request.method == "POST":
-
-		ingredient_name = (request.POST.get('ingredient_name')) #pobieranie od usera
 		quantity = request.POST.get('quantity') #pobieranie od usera
 
-		if ingredient_name and quantity:
+		if quantity:
+			ingredient_name_list = str(ingredient_name).split()
+			ingredient_name_list = ingredient_name_list[:-1]
+
+			ingredient_name = ''
+			for i in range(0, len(ingredient_name_list)):
+				if i == 0:
+					ingredient_name += ingredient_name_list[i]
+				else:
+					ingredient_name += ' ' + ingredient_name_list[i]
+
 			ingredient = Ingredient.objects.filter(name=ingredient_name.lower()).first()
+			print(quantity)
 			try:
 				ingredient_id = ingredient.id
 				PantryIngredient.objects.create(
-				pantry_id=pantry_id,
-				quantity=quantity,
-				ingredient_id=ingredient_id,
+					pantry_id=pantry_id,
+					quantity=quantity,
+					ingredient_id=ingredient_id,
 				)
 				return redirect('core:pantry-detail')
 			except IntegrityError:
 				flag = 1
-			except AttributeError:
-				flag = 2
+
 			res = redirect('core:create')
 			res.set_cookie("flag", flag)
 			return res
 
-	else:
-
-		ingredient_category = (request.GET.get('ingredient_category')) #pobieranie od usera
+	else: #Jeżeli GET
 
 		flag = request.COOKIES.get("flag", 0)
+		flag1 = 0
 
 		if flag:
 			flag = int(flag)
@@ -84,19 +92,22 @@ def pantryingredient_create(request):
 		if ingredient_category:
 			ingredients = Ingredient.objects.filter(category__name=ingredient_category)
 
+		if ingredient_name:
+			flag1 = 1
+
 
 		res = render(
 			request,
 			'core/pantryingredient_form.html',
 			context={
-				'pantry_ingredients': pi_all, #jeżeli nie będzie tego - to nie pokaże listy
 				'categories_all': categories_all, #jeżeli nie będzie tego - to nie pokaże listy
 				'empty_msg': EMPTY_MSG,
 				'duplicate_msg': DUPLICATE_MSG,
 				'wrong_name_msg': WRONG_NAME_MSG,
 				'flag': flag,
+				'flag1': flag1,
 				'ingredients': ingredients,
-
+				'ingredient_name': ingredient_name,
 			}
 		)
 
@@ -125,10 +136,6 @@ def pantryingredient_delete(request, pk):
 
 # UPDATE AN INGREDIENT AMOUNT
 def pantryingredient_update(request, pk):
-	# id = request.user.id
-	# p = get_object_or_404(Pantry, user_id=id)
-	# pi_all = PantryIngredient.objects.filter(pantry_id=p.id)
-
 	pi = get_object_or_404(PantryIngredient, pk=pk)
 	ingredient = get_object_or_404(Ingredient, id=pi.ingredient_id)
 	quantity_old = pi.quantity
@@ -143,7 +150,6 @@ def pantryingredient_update(request, pk):
 		request,
 		'core/pantryingredient_form_update.html',
 		context={
-			# 'pantry_ingredients': pi_all, #jeżeli nie będzie tego - to nie pokaże listy
 			'ingredient': ingredient,
 			'quantity_old': quantity_old,
 		}
