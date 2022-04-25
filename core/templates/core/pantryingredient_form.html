@@ -3,20 +3,43 @@
 
 </br>
     {% if flag == 1 %}
-    <p class="lead text-muted"> {{ duplicate_msg }} </p>
+        <p class="lead text-muted"> {{ duplicate_msg }} </p>
+    {% elif flag == 2 %}
+        <p class="lead text-muted"> {{ wrong_name_msg }} </p>
     {% endif %}
 
-  <form method="POST" class="form-inline-center" role="form">{% csrf_token %}
+
+
       <p class="lead text-muted">Choose what you want to add:</p>
-    <div class="input-group-inline">
-      <select name="ingredient_name" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-          <option selected>choose an ingredient...</option>
-          {% for ingredient in ingredients %}
-          <option value="{{ingredient.name}}">{{ingredient}}</option>
-          {% endfor %}
-        </select>
-      <input type="number" name="quantity" placeholder="quantity">
-      <input type="submit" value="Add" class="btn btn-info btn-sm">
+<form class="form-inline-center" role="form">
+{% for category in categories_all %}
+<input type="submit" value="{{category.name}}" name="ingredient_category">
+<!--<a href="{% url 'core:create'%}" type="submit" value="{{category.name}}" name="ingredient_category" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">{{category.name}}</a>-->
+{% endfor %}
+</form>
+
+
+  <form method="POST" class="form-inline-center" role="form">{% csrf_token %}
+<!--      <select name="ingredient_name" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">-->
+<!--          <option selected>choose an ingredient...</option>-->
+<!--          {% for ingredient in ingredients %}-->
+<!--          <option value="{{ingredient.name}}">{{ingredient}}</option>-->
+<!--          {% endfor %}-->
+<!--        </select>-->
+<!--      {% for category in categories_all %}-->
+<!--      <input type="submit" value="{{category.name}}" name="ingredient_category" class="btn btn-info btn-sm">-->
+<!--      {% endfor %}-->
+      <br>
+        <div class="input-group-inline">
+        <input type="text" name="ingredient_name" placeholder="choose an ingredient..." list="ingredients_list">
+            <datalist id="ingredients_list">
+            {% for ingredient in ingredients %}
+                <option value="{{ingredient.name}}">({{ ingredient.unit }})</option>
+            {% endfor %}
+        </datalist>
+
+        <input type="number" name="quantity" placeholder="quantity">
+        <input type="submit" value="Add" class="btn btn-info btn-sm">
     </div>
 
   </form>
