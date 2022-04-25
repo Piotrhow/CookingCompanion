@@ -12,6 +12,7 @@ class RecipeListView(ListView):
 
 
 def recipe_detail(request, id):
+
 	r = get_object_or_404(Recipe, id=id)
 	ri = RecipeIngredient.objects.filter(recipe_id=id)
 
@@ -26,17 +27,25 @@ def recipe_detail(request, id):
 
 
 def recipe_check(request):
-	r = get_object_or_404(Recipe, pk=id)
-	ri = RecipeIngredient.objects.filter(recipe_id=id)
 
-	return render(
-		request,
-		'recipes/recipe_check.html',
-		context={
-			'recipe': r,
-			'recipe_ingredients': ri,
-		}
-	)
+	if request.user.is_authenticated:
+		r = get_object_or_404(Recipe, id=2)
+	else:
+		return redirect('/login')
+
+	ri = RecipeIngredient.objects.filter(recipe_id=2)
+
+	return redirect('/') #NA RAZIE PRZEKIEROWANIE NA HOME
+
+
+	# return render(
+	# 	request,
+	# 	'recipes/recipe_check.html',
+	# 	context={
+	# 		'recipe': r,
+	# 		'recipe_ingredients': ri,
+	# 	}
+	# )
 
 
 

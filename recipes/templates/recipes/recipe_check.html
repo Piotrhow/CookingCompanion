@@ -1,6 +1,7 @@
 {% extends "recipes/base.html" %}
+{% block title %} Check&Compare {% endblock title%}
 
-{% block recipe_content %}
+{% block recipe_check %}
   <h1> TO PREPARE {{recipe.name}} </h1>
   <h2>INGREDIENTS:</h2>
   <div>
@@ -14,26 +15,8 @@
   </div>
   <p> </p>
   <p> </p>
-  <p>DESCRIPTION:</p>
+  <p>...:</p>
 
-  <div>
-    {{ recipe.description }}
-  </div>
 
-<!--CHOOSE THE RECIPE->-->
-  <div>
-    <p>
-      Like this recipe? Awesome! Let's see what you need to buy to prepare it:
-      <a href="{% url 'recipes:recipe-list' recipe.pk %}">check</a>!
-    </p>
-  </div>
-
-<!--RETURN->-->
-  <div>
-    <p>
-      Want to keep looking? No problem, let's go back to the
-      <a href="{% url 'recipes:recipe-list' %}">list</a>!
-    </p>
-  </div>
 
 {% endblock %}
