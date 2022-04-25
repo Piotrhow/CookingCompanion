@@ -1,0 +1,45 @@
+{% extends "core/base.html" %}
+{% block title %} Pantry of {{user.username}}  {% endblock title%}
+
+STARY KOD PRZED BOOTSTRAPEM
+
+{% block content %}
+<br />
+  <h1>WELCOME TO YOUR VERY OWN PANTRY !</h1>
+
+<br />
+  <div>
+    {% if pantry_ingredients %}
+      <h3>YOUR PRODUCTS:</h3>
+    {% else %}
+      {{ empty_msg }}
+    {% endif %}
+
+<div class="album py-5 bg-light">
+  {% for category in categories_all %}
+    <div class="container-sm" size>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col">
+      <ol class="list-group list-group-flush"><b>{{ category }}</b>
+          <div class="card shadow-sm">
+        {% for pantry_ingredient in pantry_ingredients %}
+          {% if category.id == pantry_ingredient.ingredient.category_id %}
+            <p><li class="list-group-item">
+              {{ pantry_ingredient }}
+              <a href="{% url 'core:delete' pantry_ingredient.id %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+              <a href="{% url 'core:update' pantry_ingredient.id %}"><button class="btn btn-warning btn-sm">Modify</button></a>
+            </li>
+          {% endif %}
+        {% endfor %}</p>
+    </div>
+    </div>
+    </div>
+    </div>
+      {% endfor %}
+    </ol>
+  </div>
+  </div>
+</br>
+    <a href="{% url 'core:create' %}"><button class="btn btn-light">Add something new</button></a>
+</br>
+{% endblock %}

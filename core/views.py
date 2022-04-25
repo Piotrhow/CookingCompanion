@@ -64,7 +64,7 @@ def pantryingredient_create(request):
 			return redirect('core:pantry-detail')
 		except IntegrityError:
 			flag = 1
-
+	categories_all = IngredientCategory.objects.all()
 	return render(
 		request,
 		'core/pantryingredient_form.html',
@@ -74,6 +74,7 @@ def pantryingredient_create(request):
 			'duplicate_msg': DUPLICATE_MSG,
 			'flag': flag,
 			'ingredients': ingredients,
+			'categories_all': categories_all,
 		}
 	)
 

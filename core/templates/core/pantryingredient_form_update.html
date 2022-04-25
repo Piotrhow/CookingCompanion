@@ -1,19 +1,23 @@
-{% extends "core/pantry_detail.html" %}
-{% block pantryingredient_form %}
+{% extends "core/base.html" %}
+{% block pantryingredient_form_update %}
 
-</br>
-  <h5>UPDATE AN INGREDIENT QUANTITY</h5>
-
-  <form method="POST" class="form-inline" role="form">{% csrf_token %}
-    <div class="input-group">
-      <select name="ingredient_name" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon" disabled>
-          <option selected>{{ingredient}}</option>
-        </select>
+<section class="py-1 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-md-8 mx-auto">
+        <h2 class="fw-light">Modifying an ingredient...</h2>
+          <form method="POST" class="center" role="form">{% csrf_token %}
+            <p class="lead text-muted">Input the new amount:</p>
+              <div class="form-group-inline">
+                <select name="ingredient_name" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon" disabled>
+                    <option selected>{{ingredient}}</option>
+                </select>
+                <input type="number" name="quantity" placeholder="{{quantity_old}}">
+                <input type="submit" value="Update" class="btn btn-warning btn-sm"></div>
+          </form>
+            <a href="{% url 'core:pantry-detail' %}"><button class="btn btn-secondary btn-sm">Back to the list</button></a>
+        </div>
+      </div>
     </div>
-<!--      <input type="text" name="ingredient_name" placeholder="ingredient name">-->
-      <input type="number" name="quantity" placeholder="{{quantity_old}}">
-      <input type="submit" value="Update" class="btn btn-warning btn-sm">
-  </form>
-      <a href="{% url 'core:pantry-detail' %}" ><button class="btn btn-secondary btn-sm">Back to the list</button></a>
+  </section>
 
 {% endblock %}
