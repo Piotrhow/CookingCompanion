@@ -65,7 +65,7 @@ def pantryingredient_create(request):
 					ingredient_name += ' ' + ingredient_name_list[i]
 
 			ingredient = Ingredient.objects.filter(name=ingredient_name.lower()).first()
-			print(quantity)
+
 			try:
 				ingredient_id = ingredient.id
 				PantryIngredient.objects.create(
