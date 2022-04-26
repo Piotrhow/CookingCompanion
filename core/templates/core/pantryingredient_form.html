@@ -3,11 +3,6 @@
 
 
 <section class="py-1 text-center container">
-    {% if flag == 1 %}
-      <br><p class="lead text-muted"> {{ duplicate_msg }} </p>
-    {% elif flag == 2 %}
-      <br><p class="lead text-muted"> {{ wrong_name_msg }} </p>
-    {% endif %}
 
     <div class="row py-lg-5">
       <div class="col-md-8 mx-auto">
@@ -20,6 +15,12 @@
       </div>
     </div>
 <hr>
+
+    {% if flag == 1 %}
+      <br><p class="lead text-muted"> {{ duplicate_msg }} </p>
+    {% elif flag == 2 %}
+      <br><p class="lead text-muted"> {{ wrong_name_msg }} </p>
+    {% endif %}
 
     {% if flag1 == 0 %}
     <div class="row py-lg-5">

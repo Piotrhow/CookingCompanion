@@ -9,7 +9,7 @@ from core.models import Pantry, PantryIngredient
 from recipes.models import Ingredient, IngredientCategory
 
 EMPTY_MSG = 'It looks like you don\'t have anything yet.'
-DUPLICATE_MSG = 'It looks like you already have that item. Try updating the existing amount instead.'
+DUPLICATE_MSG = 'Sorry... It looks like you already have that item. Try updating the existing amount instead.'
 WRONG_NAME_MSG = 'Something\'s wrong. Try again and make sure you don\'t make any typos.'
 
 
