@@ -26,6 +26,18 @@ def pantry_detail(request):
 	pi_all = PantryIngredient.objects.filter(pantry_id=pantry_id)
 	categories_all = IngredientCategory.objects.all()
 
+
+	# dict = {}
+	# for category in categories_all:
+	# 	ingredient_fits_category = pi_all.filter(ingredient__category_id=category.id)
+	#
+	# 	if ingredient_fits_category:
+	# 		print(ingredient_fits_category)
+	# 		counter = 0
+	# 	else:
+	# 		counter = 1
+
+
 	return render(
 		request,
 		'core/pantry_detail.html',
@@ -33,6 +45,8 @@ def pantry_detail(request):
 			'pantry_ingredients': pi_all,
 			'empty_msg': EMPTY_MSG,
 			'categories_all': categories_all,
+			# 'ingredent_fits_category': ingredent_fits_category,
+			# 'counter': ingredent_fits_category,
 		}
 	)
 
