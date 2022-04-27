@@ -1,49 +1,51 @@
-{% extends "core/pantry_detail.html" %}
+{% extends "core/base.html" %}
 {% block pantryingredient_form %}
 
-</br>
+
+<section class="py-1 text-center container">
+
+    <div class="row py-lg-5">
+      <div class="col-md-8 mx-auto">
+        <h5 class="fw-light">Choose a category:</h5>
+            <form class="form-inline-center" role="form">
+            {% for category in categories_all %}
+                <input type="submit" value="{{category.name}}" name="ingredient_category" class="btn btn-outline-secondary btn-sm">
+            {% endfor %}
+            </form>
+      </div>
+    </div>
+<hr>
+
     {% if flag == 1 %}
-        <p class="lead text-muted"> {{ duplicate_msg }} </p>
+      <br><p class="lead text-muted"> {{ duplicate_msg }} </p>
     {% elif flag == 2 %}
-        <p class="lead text-muted"> {{ wrong_name_msg }} </p>
+      <br><p class="lead text-muted"> {{ wrong_name_msg }} </p>
     {% endif %}
 
-
-
-      <p class="lead text-muted">Choose what you want to add:</p>
-<form class="form-inline-center" role="form">
-{% for category in categories_all %}
-<input type="submit" value="{{category.name}}" name="ingredient_category">
-<!--<a href="{% url 'core:create'%}" type="submit" value="{{category.name}}" name="ingredient_category" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">{{category.name}}</a>-->
-{% endfor %}
-</form>
-
-
-  <form method="POST" class="form-inline-center" role="form">{% csrf_token %}
-<!--      <select name="ingredient_name" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">-->
-<!--          <option selected>choose an ingredient...</option>-->
-<!--          {% for ingredient in ingredients %}-->
-<!--          <option value="{{ingredient.name}}">{{ingredient}}</option>-->
-<!--          {% endfor %}-->
-<!--        </select>-->
-<!--      {% for category in categories_all %}-->
-<!--      <input type="submit" value="{{category.name}}" name="ingredient_category" class="btn btn-info btn-sm">-->
-<!--      {% endfor %}-->
-      <br>
-        <div class="input-group-inline">
-        <input type="text" name="ingredient_name" placeholder="choose an ingredient..." list="ingredients_list">
-            <datalist id="ingredients_list">
+    {% if flag1 == 0 %}
+    <div class="row py-lg-5">
+      <div class="col-md-8 mx-auto">
+        <h5 class="fw-light">Choose an ingredient:</h5>
+            <form class="form-inline-center" role="form">
             {% for ingredient in ingredients %}
-                <option value="{{ingredient.name}}">({{ ingredient.unit }})</option>
+                <input type="submit" value="{{ingredient}}" name="ingredient_name" class="btn btn-outline-secondary btn-sm">
             {% endfor %}
-        </datalist>
-
-        <input type="number" name="quantity" placeholder="quantity">
-        <input type="submit" value="Add" class="btn btn-info btn-sm">
+            </form>
+      </div>
     </div>
+    {% endif %}
 
-  </form>
-       <a href="{% url 'core:pantry-detail'%}" ><button class="btn btn-outline-secondary btn-sm">Cancel</button></a>
-
+    {% if flag1 == 1 %}
+      <p class="lead text-muted"> Insert the amount of <b>{{ingredient_name}}</b>: </p>
+        <form method="POST" class="form-center" role="form">{% csrf_token %}
+            <div class="input-group-inline">
+                <input type="number" name="quantity" value="0" placeholder="0,00">
+                <input type="submit" value="Add" class="btn btn-info btn-sm">
+            </div>
+        </form>
+    {% endif %}
+<hr>
+      <a href="{% url 'core:pantry-detail'%}" ><button class="btn btn-danger btn-sm">Cancel</button></a>
+</section>
 
 {% endblock %}

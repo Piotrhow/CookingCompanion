@@ -8,20 +8,21 @@
             You can store your ingredients there and our app will help you with choosing a recipe to do.
         </p>
         <hr class="my-4">
+
+        <div class="container">
+            <div class="row row-cols-2 g-3">
+                <div class="col">
+                    <h5 class="fw-light">Looking for a recipe?</h5>
+                      <p class="lead text-muted">Go to <a href="{% url 'recipes:recipe-list' %}">recipe list</a>!</p>
+                </div>
+                <div class="col">
+                    <h5 class="fw-light">Check out your products?</h5>
+                      <p class="lead text-muted">Go to your <a href="{% url 'core:pantry-detail' %}">pantry</a>!</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-<!--      RECIPE LIST -->
-        <div>
-            <h5>Looking for a recipe?</h5>
-              <p>Go to <a href="{% url 'recipes:recipe-list' %}">recipe list</a>!</p>
-        </div>
-
-<!--      PANTRY  -->
-        <div>
-            <h5>Check out your products?</h5>
-              <p>Go to your <a href="{% url 'core:pantry-detail' %}">pantry</a>!</p>
-        </div>
-
   </div>
 
 {% endblock content %}

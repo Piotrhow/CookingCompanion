@@ -1,52 +1,57 @@
 {% extends "core/base.html" %}
 {% block title %} Pantry of {{user.username}}  {% endblock title%}
-{% block content %}
+{% block pantry_detail %}
 
-  <section class="py-1 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-md-8 mx-auto">
-        <h1 class="fw-light">Welcome to your pantry !</h1>
-            {% if pantry_ingredients %}
-              <p class="lead text-muted">These are the products you've got. <br>
-                Choose some to prepare a deliciuos meal.</p>
-          >>> DO ROZWIĄZANIA JAK ZROBIĆ JESZCZE PODZIAŁ NA 3 KOLUMNY?? <<<
-            {% else %}
-              <p class="lead text-muted">{{ empty_msg }}</p>
-            {% endif %}
-          <br>
-            <a href="{% url 'core:create' %}"><button class="btn btn-outline-info">Add something new</button></a>
-          <br>
-      {% block pantryingredient_form %}{% endblock %}
-      </div>
-    </div>
-  </section>
+<section class="py-1 text-center container">
+<div class="row py-lg-5">
+  <div class="col-md-8 mx-auto">
+    <h1 class="fw-light">Welcome to your pantry !</h1>
+        {% if pantry_ingredients %}
+          <p class="lead text-muted">These are the products you've got. <br>
+            Choose something to prepare a delicious meal.</p>
+        {% else %}
+          <p class="lead text-muted">{{ empty_msg }}</p>
+        {% endif %}
+      <br>
+        <a href="{% url 'core:create' %}"><button class="btn btn-outline-info">Add something new</button></a>
+      <br>
+  </div>
+</div>
+</section>
 
-  <div class="album py-5 bg-light">{% for category in categories_all %}
-    <div class="container"><b>{{ category }}</b>
+<div class="album py-5 bg-light">
+    {% for category in categories_all %}
+    <div class="container">
+        <b>{{ category }}</b>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col">
           <div class="card shadow-sm">
-              <div class="card-body">{% for pantry_ingredient in pantry_ingredients %}
-              <p class="card-text">{% if category.id == pantry_ingredient.ingredient.category_id %}
-                <p><li class="list-group-item">{{ pantry_ingredient }}
-             <div class="btn-group">
-                <a href="{% url 'core:update' pantry_ingredient.id %}"><button type="button" class="btn btn-sm btn-outline-secondary">Modify</button></a>
-                <a href="{% url 'core:delete' pantry_ingredient.id %}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
-                </li></p>{% endif %}</p>{% endfor %}
-                  </div>
-<!--              <div class="d-flex justify-content-between align-items-center">-->
-<!--                <div class="btn-group">-->
-<!--                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
-<!--                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-<!--                </div>-->
+            <div class="card-body">
+<!--                {% if pantry_ingredients %}-->
+                  {% for pantry_ingredient in pantry_ingredients %}
+                    <p class="card-text">
+                        {% if category.id == pantry_ingredient.ingredient.category_id %}
+                            <p><li class="list-group-item">
+                                {{ pantry_ingredient }}
+                                    <div class="btn-group">
+                                        <a href="{% url 'core:update' pantry_ingredient.id %}"><button type="button" class="btn btn-sm btn-outline-secondary">Modify</button></a>
+                                        <a href="{% url 'core:delete' pantry_ingredient.id %}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                                </li>
+                            </p>
+                        {% endif %}</p>
+                  {% endfor %}
 
-<!--                <small class="text-muted">9 mins</small>-->
-              </div>
-            </div>{% endfor %}
+                                    </div>
+<!--                {% else %}-->
+<!--                    <p class="card-text">{{ empty_msg }}</p>-->
+<!--                {% endif %}-->
+            </div>
           </div>
-          </div>
-          </div>
-          </div>
+        </div>
+      </div>
+        {% endfor %}
+    </div>
+</div>
 
 
 
