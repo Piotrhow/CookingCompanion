@@ -6,9 +6,9 @@ from django.views.generic import TemplateView
 app_name = 'recipes'
 
 urlpatterns = [
-	path('recipe-list/', views.RecipeListView.as_view(), name='recipe-list'),
-	path('recipe/<int:id>/', views.recipe_detail, name='recipe-detail'),
-	path('recipe-check/', views.recipe_check, name='recipe-check'),
-    #
+    path('recipe-list/', views.RecipeListView.as_view(), name='recipe-list'),
+    path('recipe/<int:id>/', views.recipe_detail, name='recipe-detail'),
+    path('recipe-check/<int:id>', views.recipe_check, name='recipe-check'),
+    path('pantry_subtract/', views.pantry_subtract, name='pantry-subtract'),
     #
 ]

@@ -12,11 +12,33 @@
       </li>
       {% endfor %}
     </ol>
+    </div>
+    <p></p>
+    <p></p>
+<h2>PANTRY:</h2>
+  <div>
+      <ol>
+        {% for pantry_ingredient in pantry_ingredients %}
+        <li>
+          {{ pantry_ingredient }}
+        </li>
+        {% endfor %}
+      </ol>
   </div>
   <p> </p>
+<h2>MISSING:</h2>
+  <div>
+
+      {% for missing_ingredient in missing_ingredients %}
+      <li>{{ missing_ingredient }}</li>
+      {% endfor %}
+
+      {% for key, values in partly_missing_ingredients.items %}
+      <li>{{ key }} {{ values }}</li>
+      {% endfor %}
+  </div>
   <p> </p>
-  <p>...:</p>
-
-
+<p></p>
+ <p>If you're intrested in doing this recipe click <a href="{% url 'recipes:pantry-subtract' %}">HERE</a> to subtract ingredients from your pantry!</p>
 
 {% endblock %}
