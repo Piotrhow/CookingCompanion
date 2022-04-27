@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Recipe(models.Model):
-	name = models.CharField(max_length=128)
+	name = models.CharField(max_length=128, unique=True)
 	description = models.TextField()
 	added = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
@@ -17,7 +17,7 @@ class Recipe(models.Model):
 	# rating = models.PositiveIntegerField(min_value=1, max_value=5) #jako rating
 
 	def __str__(self):
-		return f'Recipe {self.name}'
+		return f'{self.name}'
 
 
 class Ingredient(models.Model):

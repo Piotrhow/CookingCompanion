@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+{% block pantryingredient_form %}
+
+
+<section class="py-1 text-center container">
+
+    <div class="row py-lg-5">
+      <div class="col-md-8 mx-auto">
+        <h5 class="fw-light">Choose a category:</h5>
+            <form class="form-inline-center" role="form">
+            {% for category in categories_all %}
+                <input type="submit" value="{{category.name}}" name="ingredient_category" class="btn btn-outline-secondary btn-sm">
+            {% endfor %}
+            </form>
+      </div>
+    </div>
+<hr>
+
+    {% if flag == 1 %}
+      <br><p class="lead text-muted"> {{ duplicate_msg }} </p>
+    {% elif flag == 2 %}
+      <br><p class="lead text-muted"> {{ wrong_name_msg }} </p>
+    {% endif %}
+
+    {% if flag1 == 0 %}
+    <div class="row py-lg-5">
+      <div class="col-md-8 mx-auto">
+        <h5 class="fw-light">Choose an ingredient:</h5>
+            <form class="form-inline-center" role="form">
+            {% for ingredient in ingredients %}
+                <input type="submit" value="{{ingredient}}" name="ingredient_name" class="btn btn-outline-secondary btn-sm">
+            {% endfor %}
+            </form>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if flag1 == 1 %}
+      <p class="lead text-muted"> Insert the amount of <b>{{ingredient_name}}</b>: </p>
+        <form method="POST" class="form-center" role="form">{% csrf_token %}
+            <div class="input-group-inline">
+                <input type="number" name="quantity" value="0" placeholder="0,00">
+                <input type="submit" value="Add" class="btn btn-info btn-sm">
+            </div>
+        </form>
+    {% endif %}
+<hr>
+      <a href="{% url 'core:pantry-detail'%}" ><button class="btn btn-danger btn-sm">Cancel</button></a>
+</section>
+
+{% endblock %}

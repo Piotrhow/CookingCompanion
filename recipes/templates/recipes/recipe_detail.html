@@ -1,6 +1,7 @@
 {% extends "recipes/base.html" %}
+{% block title %} {{recipe.name}} {% endblock title%}
 
-{% block recipe_content %}
+{% block recipe_detail %}
   <h1> {{recipe.name}} </h1>
   <h2>INGREDIENTS:</h2>
   <div>
@@ -22,20 +23,15 @@
 
 <!--CHOOSE THE RECIPE->-->
   <div>
-    <h5>
-      Like this recipe?
-      <h6>Awesome! Let's see what you need to buy to prepare it:
-      <a href="{% url 'recipes:recipe-check' %}">check</a>!</h6>
-    </h5>
+    <h5>Like this recipe?</h5>
+      <p>Awesome! Let's see what you need to buy to prepare it:
+      <a href="{% url 'recipes:recipe-check' %}">check</a>!</p>
   </div>
 
 <!--RETURN->-->
   <div>
-    <h5>
-      Want to keep looking?
-      <h6>No problem, let's go back to the
-      <a href="{% url 'recipes:recipe-list' %}">list</a>!</h6>
-    </h5>
+    <h5>Want to keep looking?</h5>
+      <p>No problem, let's go back to the <a href="{% url 'recipes:recipe-list' %}">list</a>!</p>
   </div>
 
 {% endblock %}

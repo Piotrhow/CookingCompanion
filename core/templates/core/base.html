@@ -13,8 +13,6 @@
     <!--Font awesome icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-
-
     <title>{% block title %} {% endblock %} </title>
 </head>
 <body>
@@ -50,7 +48,11 @@
             </button>
           </div>
         {% endif %}
-        {% block content %}{% endblock %}
+        {% block pantry_detail %}{% endblock %}
+        {% block pantryingredient_delete %}{% endblock %}
+        {% block pantryingredient_form %}{% endblock %}
+        {% block pantryingredient_form_update %}{% endblock %}
+
       </div>
     </div>
   </div>
