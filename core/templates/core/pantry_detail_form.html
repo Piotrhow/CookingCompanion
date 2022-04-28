@@ -21,14 +21,14 @@
     <div class="py-1 text-center container">
         <h5 class="lead text-muted">
             <div class="fw-light">
-                <p><b>Don't know what to cook? With CookingCompanion it's not a problem!</p>
-                <p>Just pick the ingredients you want to use and we will suggest something for you:</b></p>
+                <p><b>Don't know what to cook? With CookingCompanion it's not a problem!</b></p>
+                <p><b>Just pick the ingredients you want to use, and we will suggest something for you:</b></p>
                 <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-warning">Disable checkboxes</button></a>
-                <i><p>jeszcze select all moze dodac??</p></i>
+                <i><p>moze jeszcze select all dodac??</p></i>
             </div>
         </h5>
     </div>
-<form class="form-inline-center" role="form">
+<form action="{% url 'core:pantry-check' %}" method="POST" class="form-inline-center" role="form">{% csrf_token %}
 
     {% for key, value in ingredient_fits_category.items %}
     <div class="container"><b>{{ key }}</b>
@@ -41,7 +41,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     {{ val }}
-                                    <input type="checkbox" name="ingredients_check[]" value="{{ val.id }}" class="form-check-input-inline me-1" >
+                                    <input type="checkbox" name="ing_{{ val.id }}" value="{{ val.id }}" class="form-check-input-inline me-1" >
                                 </li>
                         </ul>
                             </p>
