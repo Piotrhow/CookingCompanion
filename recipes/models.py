@@ -59,3 +59,4 @@ class IngredientCategory(models.Model):
 
 	class Meta:
 		verbose_name_plural = "Ingredient categories"
+		ordering = ['name']
