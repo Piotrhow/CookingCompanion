@@ -1,11 +1,11 @@
 {% extends "core/base.html" %}
 {% block pantryingredient_form %}
 
-
+<!--BUTTONY DO WYBRANIA KATEGORII-->
 <section class="py-1 text-center container">
-
+    <br>
+    <a href="{% url 'core:pantry-detail'%}" ><button class="btn btn-danger btn-sm">Back to pantry view</button></a>
     <div class="row py-lg-5">
-        <a href="{% url 'core:pantry-detail'%}" ><button class="btn btn-danger btn-sm">Back to pantry view</button></a>
         <div class="col-md-8 mx-auto">
         <h5 class="fw-light">Choose a category:</h5>
             <form class="form-inline-center" role="form">
@@ -16,37 +16,40 @@
       </div>
     </div>
 <hr>
-
-    {% if flag == 1 %}
+<!--KOMUNIKAT O WPROWADZENIU BŁĘDNEJ LUB ISTNIEJĄCEJ JUZ WARTOŚCI-->
+    {% if integrityerror_flag == 1 %}
       <br><p class="lead text-muted"> {{ duplicate_msg }} </p>
     {% elif flag == 2 %}
       <br><p class="lead text-muted"> {{ wrong_name_msg }} </p>
     {% endif %}
 
-    {% if flag1 == 0 %}
+<!--BUTTONY DO WYBRANIA INGREDIENTS-->
+    {% if ingredientchosen_flag == 0 %}
+    <i>dodać selecta z podpowiedzią??</i>
     <div class="row py-lg-5">
       <div class="col-md-8 mx-auto">
         <h5 class="fw-light">Choose an ingredient:</h5>
             <form class="form-inline-center" role="form">
-            {% for ingredient in ingredients %}
-                <input type="submit" value="{{ingredient}}" name="ingredient_name" class="btn btn-outline-secondary btn-sm">
+            {% for ingredient in ingredients_all %}
+                <button type="submit" value="{{ingredient.id}}" name="ingredient_id" class="btn btn-outline-secondary btn-sm">{{ ingredient }}</button>
             {% endfor %}
             </form>
       </div>
     </div>
     {% endif %}
 
-    {% if flag1 == 1 %}
-      <p class="lead text-muted"> Insert the amount of <b>{{ingredient_name}}</b>: </p>
+<!--WYŚWIETLENIE INPUTA DO WPORWADZENIA "QUANTITY"-->
+    {% if ingredientchosen_flag == 1 %}
+      <p class="lead text-muted"> Insert the amount of <b>{{ ingredient }}</b>: </p>
         <form method="POST" class="form-center" role="form">{% csrf_token %}
             <div class="input-group-inline">
                 <input type="number" name="quantity" value="0" placeholder="0,00">
-                <input type="submit" value="Add" class="btn btn-info btn-sm">
             </div>
+            <br>
+            <input type="submit" value="Add" class="btn btn-info btn-sm">
         </form>
     {% endif %}
-<hr>
-      <a href="{% url 'core:pantry-detail'%}" ><button class="btn btn-danger btn-sm">Cancel</button></a>
+
 </section>
 
 {% endblock %}
