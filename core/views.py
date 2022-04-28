@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django import views
+from django.urls import reverse
+from urllib.parse import urlencode
 from django.db import IntegrityError
 
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
@@ -13,7 +15,7 @@ DUPLICATE_MSG = 'Sorry... It looks like you already have that item. Try updating
 WRONG_NAME_MSG = 'Something\'s wrong. Try again and make sure you don\'t make any typos.'
 
 
-# Create your views here.
+# READ PANTRY VIEW
 def pantry_detail(request):
 
 	if request.user.is_authenticated:
@@ -26,17 +28,11 @@ def pantry_detail(request):
 	pi_all = PantryIngredient.objects.filter(pantry_id=pantry_id)
 	categories_all = IngredientCategory.objects.all()
 
-
-	# dict = {}
-	# for category in categories_all:
-	# 	ingredient_fits_category = pi_all.filter(ingredient__category_id=category.id)
-	#
-	# 	if ingredient_fits_category:
-	# 		print(ingredient_fits_category)
-	# 		counter = 0
-	# 	else:
-	# 		counter = 1
-
+	dict = {}
+	for category in categories_all:
+		ingredient_fits_category = pi_all.filter(ingredient__category_id=category.id)
+		if ingredient_fits_category:
+			dict[category.name] = ingredient_fits_category
 
 	return render(
 		request,
@@ -45,8 +41,7 @@ def pantry_detail(request):
 			'pantry_ingredients': pi_all,
 			'empty_msg': EMPTY_MSG,
 			'categories_all': categories_all,
-			# 'ingredent_fits_category': ingredent_fits_category,
-			# 'counter': ingredent_fits_category,
+			'ingredient_fits_category': dict,
 		}
 	)
 
@@ -109,7 +104,6 @@ def pantryingredient_create(request):
 		if ingredient_name:
 			flag1 = 1
 
-
 		res = render(
 			request,
 			'core/pantryingredient_form.html',
@@ -169,3 +163,77 @@ def pantryingredient_update(request, pk):
 		}
 	)
 
+
+# READ PANTRY VIEW - WITH CHECKBOXES AND FORM
+def pantry_detail_form(request):
+	id = request.user.id
+	p = get_object_or_404(Pantry, user_id=id)
+	pantry_id = p.id
+	pi_all = PantryIngredient.objects.filter(pantry_id=pantry_id)
+	categories_all = IngredientCategory.objects.all()
+	ingredients = Ingredient.objects.all()
+
+	# if request.method == "POST":
+	# 	ingredients_chosen = (request.POST.getlist('ingredients_check[]'))  # pobieranie od usera
+	# 	# print(ingredients_chosen)
+	# 	for ingredient_chosen in ingredients_chosen:
+	# 		# print(ingredient_chosen)
+	# 		p = PantryIngredient.objects.get(pk=ingredient_chosen)
+	# 		print(p)
+	# 	base_url = reverse('core:pantry-check')
+	# 	query_list = urlencode({'ingredients_chosen': ingredients_chosen})
+	# 	url = '{}?{}'.format(base_url, query_list)
+	# 	return redirect(url)
+
+	ingredients_chosen = (request.GET.getlist('ingredients_check[]'))  # pobieranie od usera
+
+	if ingredients_chosen:
+		array = []
+		for ingredient_chosen in ingredients_chosen:
+			p = PantryIngredient.objects.get(pk=ingredient_chosen)
+			array.append(p)
+		print(array)
+		return render(
+			request,
+			'core/pantry_check.html',
+			context={
+				'ingredients': ingredients,
+				'pantry_ingredients': array,
+			}
+		)
+
+	dict = {}
+	for category in categories_all:
+		ingredient_fits_category = pi_all.filter(ingredient__category_id=category.id)
+		if ingredient_fits_category:
+			dict[category.name] = ingredient_fits_category
+
+	return render(
+		request,
+		'core/pantry_detail_form.html',
+		context={
+			'pantry_ingredients': pi_all,
+			'empty_msg': EMPTY_MSG,
+			'categories_all': categories_all,
+			'ingredient_fits_category': dict,
+		}
+	)
+
+
+# CHECK AND COMPARE PANTRYINGREDIENTS WITH RECIPES
+def pantryingredient_check(request):
+	ingredients_chosen = request.GET.getlist('p')
+
+	# for ingredient_chosen in ingredients_chosen:
+	# 	print(ingredient_chosen)
+
+	return render(
+		request,
+		'core/pantry_check.html',
+		context={
+			# 'pantryingredient': pi,
+			# 'ingredient': ingredient,
+			'ingredients_chosen': ingredients_chosen,
+			'pantry_ingredients': 'array',
+		}
+	)

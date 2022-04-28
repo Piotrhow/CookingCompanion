@@ -5,7 +5,8 @@
 <section class="py-1 text-center container">
 
     <div class="row py-lg-5">
-      <div class="col-md-8 mx-auto">
+        <a href="{% url 'core:pantry-detail'%}" ><button class="btn btn-danger btn-sm">Back to pantry view</button></a>
+        <div class="col-md-8 mx-auto">
         <h5 class="fw-light">Choose a category:</h5>
             <form class="form-inline-center" role="form">
             {% for category in categories_all %}

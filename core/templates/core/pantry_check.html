@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% block title %} Confirm delete {% endblock %}
+{% load static %}
+
+{% block pantryingredient_check %}
+
+<section class="py-1 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-md-8 mx-auto">
+        <h3 class="fw-light">Let's see what you can cook with:</h3>
+            {% for pantry_ingredient in pantry_ingredients %}
+            <button type="button" class="btn btn-info btn-sm" disabled >{{pantry_ingredient}}</button>
+            {% endfor %}
+      </div>
+    </div>
+        <p class="lead text-muted"> Wan't to choose something else? </p>
+        <a href="{% url 'core:pantry-detail-form' %}" ><button class="btn btn-danger btn-sm">Back to pantry view</button></a>
+<hr>
+</section>
+
+<section class="py-1 text-center container">
+
+    <div class="row py-lg-5">
+        <div class="col-md-8 mx-auto">
+        <h3 class="fw-light">Recipe list:</h3>
+            <i>litsa jak w recipe detail...</i>
+      </div>
+    </div>
+<hr>
+</section>
+
+{% endblock %}
