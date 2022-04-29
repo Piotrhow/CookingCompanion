@@ -12,7 +12,13 @@
   </div>
 </div>
 
-image missing
+<div class="img-one">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ recipe.picture.url }} "
+             style="cursor: pointer;"
+      </div>
+
 <hr>
     <div class="container">
       <h4 class="fw-light">INGREDIENTS:</h4>
@@ -43,7 +49,7 @@ image missing
                 <div class="col">
                     <h5 class="fw-light">Like this recipe?</h5>
                       <p class="lead text-muted">Awesome! Let's see what you need to buy to prepare it:
-                        <a href="{% url 'recipes:recipe-check' %}">check</a>!</p>
+                        <a href="{% url 'recipes:recipe-check' recipe.pk %}">check</a>!</p>
                 </div>
             </div>
         </div>

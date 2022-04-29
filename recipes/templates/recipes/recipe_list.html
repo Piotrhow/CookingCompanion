@@ -8,6 +8,15 @@
       <h1 class="fw-light">RECIPE LIST:</h1>
         {% for recipe in recipe_list %}
 
+    <div class="img-one">
+        <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ recipe.picture.url }} "
+             style="cursor: pointer;"
+        </a>
+      </div>
+
           <p class="lead text-muted"><br>
             <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a></p>
 
@@ -18,23 +27,6 @@
 
 <div class="album py-5 bg-light">
 
-    {% for recipe in recipe_list %}
-    <div class="container"><b>{{ recipe.name }}</b>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <p class="card-text">
-                            <ul class="list-group">
-
-                        </ul>
-                            </p>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
       <div class="py-1 text-center container">
         <h5 class="lead text-muted">
             <div class="fw-light">
