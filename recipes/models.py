@@ -39,6 +39,9 @@ class Ingredient(models.Model):
 	unit = models.ForeignKey('IngredientUnit', on_delete=models.SET_NULL, blank=True, null=True)
 	category = models.ForeignKey('IngredientCategory', on_delete=models.SET_NULL, blank=True, null=True)
 
+	class Meta:
+		ordering = ['name']
+
 	def __str__(self):
 		return f'{self.name} ({self.unit})'
 
@@ -70,3 +73,4 @@ class IngredientCategory(models.Model):
 
 	class Meta:
 		verbose_name_plural = "Ingredient categories"
+		ordering = ['name']

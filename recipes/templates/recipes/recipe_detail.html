@@ -2,47 +2,56 @@
 {% block title %} {{recipe.name}} {% endblock title%}
 
 {% block recipe_detail %}
-<hr>
-  <h1> {{recipe.name}} </h1>
- <div class="img-one">
+<br>
+<p class="lead text-muted"><a href="{% url 'recipes:recipe-list' %}">Back to the list</a>!</p>
+<div class="py-1 text-center container">
+  <div class="row">
+      <div class="col-md-8 mx-auto">
+    <h2 class="fw-light"> {{recipe.name}} </h2>
+      </div>
+  </div>
+</div>
+
+<div class="img-one">
         <img id="redirectimg"
              class="alignnone size-full wp-image-1303"
              src="{{ recipe.picture.url }} "
              style="cursor: pointer;"
       </div>
-  <h2>INGREDIENTS:</h2>
-  <div>
+
+<hr>
+    <div class="container">
+      <h4 class="fw-light">INGREDIENTS:</h4>
+
     <ol>
       {% for recipe_ingredient in recipe_ingredients %}
-      <li>
-        {{ recipe_ingredient }}
-
+      <b><li class="lead text-muted bold">
+        <p >{{ recipe_ingredient }}</p></b>
       </li>
       {% endfor %}
     </ol>
   </div>
-<div>
-</div>
-  <p> </p>
-  <p> </p>
-  <h2>DESCRIPTION:</h2>
+<hr>
 
-  <div>
-    <p>{{ recipe.description }}</p>
+  <div class="container">
+  <h4 class="fw-light">DESCRIPTION:</h4>
+    <p class="text-muted">{{ recipe.description }}</p>
   </div>
+<hr>
 
-<!--CHOOSE THE RECIPE->-->
-  <div>
-    <h5>Like this recipe?</h5>
-      <p>Awesome! Let's see what you need to buy to prepare it:
-      <a href="{% url 'recipes:recipe-check' recipe.pk %}">check</a>!</p>
-  </div>
-
-<!--RETURN->-->
-  <div>
-    <h5>Want to keep looking?</h5>
-      <p>No problem, let's go back to the <a href="{% url 'recipes:recipe-list' %}">list</a>!</p>
-  </div>
-
+        <div class="container">
+            <div class="row row-cols-2 g-3">
+                <div class="col">
+                    <h5 class="fw-light">Want to keep looking?</h5>
+                      <p class="lead text-muted">No problem, let's go back to the
+                        <a href="{% url 'recipes:recipe-list' %}">list</a>!</p>
+                </div>
+                <div class="col">
+                    <h5 class="fw-light">Like this recipe?</h5>
+                      <p class="lead text-muted">Awesome! Let's see what you need to buy to prepare it:
+                        <a href="{% url 'recipes:recipe-check' recipe.pk %}">check</a>!</p>
+                </div>
+            </div>
+        </div>
 
 {% endblock %}

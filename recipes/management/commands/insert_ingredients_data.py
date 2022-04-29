@@ -51,8 +51,8 @@ def populate_ingredients():
 	#
 	category = IngredientCategory.objects.get(name="Vegetables")
 	Ingredient.objects.create(name="carrots", category=category, unit=unit_pcs),
-	Ingredient.objects.create(name="potatoes", category=category, unit=unit_pcs),
-	Ingredient.objects.create(name="sweet potatoes", category=category, unit=unit_pcs),
+	Ingredient.objects.create(name="potatoes", category=category, unit=unit_g),
+	Ingredient.objects.create(name="sweet potatoes", category=category, unit=unit_g),
 	Ingredient.objects.create(name="cucumbers", category=category, unit=unit_pcs),
 	Ingredient.objects.create(name="onions", category=category, unit=unit_pcs),
 	Ingredient.objects.create(name="peas", category=category, unit=unit_g),

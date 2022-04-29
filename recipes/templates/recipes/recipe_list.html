@@ -2,11 +2,13 @@
 {% block title %} Recipe List {% endblock title%}
 
 {% block recipe_list %}
-  <h1>RECIPE LIST:</h1>
-  <h3><ol>
-    {% for recipe in recipe_list %}
+<div class="py-1 text-center container">
+<div class="row py-lg-5">
+  <div class="col-md-8 mx-auto">
+      <h1 class="fw-light">RECIPE LIST:</h1>
+        {% for recipe in recipe_list %}
 
-      <div class="img-one">
+    <div class="img-one">
         <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
         <img id="redirectimg"
              class="alignnone size-full wp-image-1303"
@@ -14,12 +16,27 @@
              style="cursor: pointer;"
         </a>
       </div>
-        <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a>
-      </li>
-    {% endfor %}
-  </ol></h3>
 
-To match recipe click
-<a href="{% url 'recipes:recipe-matching' %}">HERE</a>
+          <p class="lead text-muted"><br>
+            <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a></p>
+
+        {% endfor %}
+  </div>
+</div>
+</div>
+
+<div class="album py-5 bg-light">
+
+      <div class="py-1 text-center container">
+        <h5 class="lead text-muted">
+            <div class="fw-light">
+                <p><b>Don't know what to cook? With CookingCompanion it's not a problem!</p>
+                <p>Just pick the ingredients you want to use and we will suggest something for you:</b></p>
+                <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-info">Go to pantry</button></a>
+            </div>
+        </h5>
+    </div>
+    </div>
+</div>
 
 {% endblock %}
