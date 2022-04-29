@@ -28,8 +28,7 @@
             </div>
         </h5>
     </div>
-<form action="{% url 'core:pantry-check' %}" method="POST" class="form-inline-center" role="form">{% csrf_token %}
-
+<form method="POST" class="form-inline-center" role="form">{% csrf_token %}
     {% for key, value in ingredient_fits_category.items %}
     <div class="container"><b>{{ key }}</b>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -41,9 +40,9 @@
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     {{ val }}
-                                    <input type="checkbox" name="ing_{{ val.id }}" value="{{ val.id }}" class="form-check-input-inline me-1" >
+                                    <input type="checkbox" name="ingredients_check[]" value="{{ val.id }}" class="form-check-input-inline me-1" >
                                 </li>
-                        </ul>
+                            </ul>
                             </p>
                         {% endfor %}
                     </div>
@@ -53,15 +52,20 @@
     </div>
     {% endfor %}
 </div>
-        <div class="py-1 text-center container">
+
+
+    <div class="py-1 text-center container">
         <h5 class="lead text-muted">
+            jak dodać info że nic nie wybrano...?
+            {% if valueerror_flag == 1 %}
+            <p>{{ choose_sth_msg }}</p>
+            {% endif %}
             <div class="fw-light">
-<!--                <b>Pick the ingredients you want to use:</b>-->
                 <input type="submit" value="Check out recipes" class="btn btn-outline-info">
-<!--                    <a href="{% url 'core:pantry-check' %}"><button type="button" class="btn btn-outline-secondary">Check out recipes</button></a>-->
             </div>
         </h5>
     </div>
+
 </form>
 </div>
 

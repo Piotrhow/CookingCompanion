@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-{% block title %} Confirm delete {% endblock %}
+{% block title %} {% endblock %}
 {% load static %}
 
 {% block pantryingredient_check %}
@@ -8,7 +8,6 @@
     <div class="row py-lg-5">
         <div class="col-md-8 mx-auto">
         <h3 class="fw-light">Let's see what you can cook with:</h3>
-            {{ ingredients_chosen }}
             {% for pantry_ingredient in ingredients_chosen %}
             <button type="button" class="btn btn-info btn-sm" disabled >{{pantry_ingredient}}</button>
             {% endfor %}
@@ -21,12 +20,20 @@
 
 <section class="py-1 text-center container">
 
-    <div class="row py-lg-5">
-        <div class="col-md-8 mx-auto">
-        <h3 class="fw-light">Recipe list:</h3>
-            <i>litsa jak w recipe detail...</i>
-      </div>
-    </div>
+<div class="py-1 text-center container">
+<div class="row py-lg-5">
+  <div class="col-md-8 mx-auto">
+      <h4 class="fw-light">RECIPE LIST:</h4>
+        {% for recipe in recipes_all %}
+
+          <p class="lead text-muted"><br>
+            <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a></p>
+
+        {% endfor %}
+  </div>
+</div>
+</div>
+
 <hr>
 </section>
 
