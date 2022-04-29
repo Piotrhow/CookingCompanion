@@ -14,7 +14,7 @@ class RecipeListView(ListView):
 
 def recipe_detail(request, id):
     r = get_object_or_404(Recipe, id=id)
-    ri = RecipeIngredient.objects.filter(recipe_id=id)
+    ri = RecipeIngredient.objects.filter(recipe_id=id)   #filter only ingredients used in this recipe
 
     return render(
         request,
@@ -28,37 +28,102 @@ def recipe_detail(request, id):
 
 @login_required()
 def recipe_check(request, id):
+    r = get_object_or_404(Recipe, id=id)
     current_user = request.user
     ri = RecipeIngredient.objects.filter(recipe_id=id)  # shows ingredients used in recipe
-    residual = RecipeIngredient.objects.filter(recipe_id=id)  # shows ingredients used in recipe
+    residual = RecipeIngredient.objects.filter(recipe_id=id)   # stores ingredients used in recipe
     pantry = Pantry.objects.filter(user__id=current_user.id)  # select current's user pantry
     pi = PantryIngredient.objects.filter(pantry__in=pantry)  # shows all ingredients of selected pantry
     partly_missing = dict()
 
     for recip_ingred in ri:
-        pantry_ingred = pi.filter(ingredient__id=recip_ingred.ingredient.id).first()
+        pantry_ingred = pi.filter(ingredient__id=recip_ingred.ingredient.id).first()   # select ingredient from pantry
         if pantry_ingred:
-            res = pantry_ingred.quantity - recip_ingred.quantity
+            res = pantry_ingred.quantity - recip_ingred.quantity       # calculate quantity
             if res < 0:
-                partly_missing[pantry_ingred.ingredient] = res * - 1
-            residual = residual.exclude(id=recip_ingred.id)
-    print(residual)
+                partly_missing[pantry_ingred.ingredient] = res * -1        # if calculated < 0 save to dict
 
+            residual = residual.exclude(id=recip_ingred.id)          # exclude not missing ingredients
 
 
     return render(
         request,
         'recipes/recipe_check.html',
         context={
+            'recipe': r,
             'recipe_ingredients': ri,
             'pantry_ingredients': pi,
             'missing_ingredients': residual,
             'partly_missing_ingredients': partly_missing,
         },
-
     )
 
 
 @login_required()
-def pantry_subtract(request):
-    return render(request,'recipes/pantry_subtract.html')
+def pantry_subtraction(request, id):
+    r = get_object_or_404(Recipe, id=id)
+    current_user = request.user
+    ri = RecipeIngredient.objects.filter(recipe_id=id)
+    pantry = Pantry.objects.filter(user__id=current_user.id)
+    pi = PantryIngredient.objects.filter(pantry__in=pantry)
+
+    for recip_ingred in ri:
+        pantry_ingred = pi.filter(ingredient__id=recip_ingred.ingredient.id).first()
+        res = pantry_ingred.quantity - recip_ingred.quantity
+        pantry_ingred.quantity = res
+        if res >= 0:
+            pantry_ingred.save()
+        else:
+            print("Unknown error!")
+
+    return render(
+        request,
+        'recipes/pantry_subtract.html',
+        context={
+            'recipe': r,
+            'recipe_ingredients': ri,
+        }
+    )
+
+
+def recipe_matching(request):
+    current_user = request.user
+    recipes = Recipe.objects.all()
+    pantry = Pantry.objects.filter(user__id=current_user.id)
+    pi = PantryIngredient.objects.filter(pantry__in=pantry)
+    matching = dict()
+
+    for recipe in recipes:
+        recipe.matching = 0
+        recid = recipe.id
+        ri = RecipeIngredient.objects.filter(recipe_id=recid)
+        for recip_ingred in ri:
+            pantry_ingred = pi.filter(ingredient__id=recip_ingred.ingredient.id).first()
+            if pantry_ingred:
+                if pantry_ingred.quantity >= recip_ingred.quantity:
+                    recipe.matching += 1
+                else:
+                    continue
+            else:
+                continue
+        matching[recipe] = recipe.matching           # save recipe with it's matching value
+
+    sorted_values = sorted(matching.values(), reverse=True)           # sort dict from high to low
+    sorted_recipes = {}
+
+    for i in sorted_values:
+        for k in matching.keys():
+            if matching[k] == i:
+                sorted_recipes[k] = matching[k]
+                break
+
+    return render(
+        request,
+        'recipes/recipe_matching.html',
+        context={
+            'recipes': recipes,
+            'matching': sorted_recipes,
+        }
+    )
+
+

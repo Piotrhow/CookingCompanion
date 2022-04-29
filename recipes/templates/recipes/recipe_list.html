@@ -5,10 +5,21 @@
   <h1>RECIPE LIST:</h1>
   <h3><ol>
     {% for recipe in recipe_list %}
-      <li>
+
+      <div class="img-one">
+        <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ recipe.picture.url }} "
+             style="cursor: pointer;"
+        </a>
+      </div>
         <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a>
       </li>
     {% endfor %}
   </ol></h3>
+
+To match recipe click
+<a href="{% url 'recipes:recipe-matching' %}">HERE</a>
 
 {% endblock %}

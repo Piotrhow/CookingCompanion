@@ -1,0 +1,31 @@
+{% extends "recipes/base.html" %}
+{% block title %} Recipe matching results: {% endblock title %}
+
+{% block recipe_matching %}
+
+
+<h2>Sorted recipe list:</h2>
+<h4>From top to bottom based on ingredients you have in your pantry:</h4>
+
+<h3>
+  <ol>
+
+{% for key, values in matching.items %}
+
+<div class="img-one">
+        <a href="{% url 'recipes:recipe-detail' key.pk %}" target="blank">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ key.picture.url }} "
+             style="cursor: pointer;"
+        </a>
+</div>
+  <a href="{% url 'recipes:recipe-detail' key.pk %}">{{ key }}</a>
+</li>
+
+{% endfor %}
+  </ol>
+</h3>
+
+
+{% endblock %}

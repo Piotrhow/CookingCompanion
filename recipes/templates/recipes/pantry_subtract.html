@@ -1,7 +1,35 @@
 {% extends "recipes/base.html" %}
+{% block title %} Remove used ingredients from pantry {% endblock title %}
 
 {% block pantry_subtract %}
 
-OK
+<div class="img-one">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ recipe.picture.url }} "
+             style="cursor: pointer;"
+      </div>
+
+    <h1> {{recipe.name}} </h1>
+    <h3>Removed those ingredients from your pantry:</h3>
+<div>
+    <ol>
+      {% for recipe_ingredient in recipe_ingredients %}
+
+      <li>
+        {{ recipe_ingredient }}
+      </li>
+      {% endfor %}
+    </ol>
+    </div>
+
+<div>
+<p></p>
+<p>
+    Click
+    <a href="{% url 'users-home' %}">HERE</a>
+    to get back to your main page.
+</p>
+</div>
 
 {% endblock %}

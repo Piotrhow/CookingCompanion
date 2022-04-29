@@ -2,17 +2,27 @@
 {% block title %} {{recipe.name}} {% endblock title%}
 
 {% block recipe_detail %}
+<hr>
   <h1> {{recipe.name}} </h1>
+ <div class="img-one">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ recipe.picture.url }} "
+             style="cursor: pointer;"
+      </div>
   <h2>INGREDIENTS:</h2>
   <div>
     <ol>
       {% for recipe_ingredient in recipe_ingredients %}
       <li>
         {{ recipe_ingredient }}
+
       </li>
       {% endfor %}
     </ol>
   </div>
+<div>
+</div>
   <p> </p>
   <p> </p>
   <h2>DESCRIPTION:</h2>
@@ -33,5 +43,6 @@
     <h5>Want to keep looking?</h5>
       <p>No problem, let's go back to the <a href="{% url 'recipes:recipe-list' %}">list</a>!</p>
   </div>
+
 
 {% endblock %}

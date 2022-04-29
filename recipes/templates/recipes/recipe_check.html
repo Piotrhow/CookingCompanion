@@ -2,6 +2,15 @@
 {% block title %} Check&Compare {% endblock title%}
 
 {% block recipe_check %}
+
+ <div class="img-one">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ recipe.picture.url }} "
+             style="cursor: pointer;"
+      </div>
+
+<p>{{ text }}</p>
   <h1> TO PREPARE {{recipe.name}} </h1>
   <h2>INGREDIENTS:</h2>
   <div>
@@ -28,17 +37,44 @@
   <p> </p>
 <h2>MISSING:</h2>
   <div>
-
+    {% if missing_ingredients %}
       {% for missing_ingredient in missing_ingredients %}
+      <h5>Completely missing ingredients:</h5>
+
       <li>{{ missing_ingredient }}</li>
       {% endfor %}
+      {% else %}
+      <li>There is none of completely missing ingredients!</li>
+      {% endif %}
 
+<p></p>
+      <p></p>
+      {% if partly_missing_ingredients.items %}
       {% for key, values in partly_missing_ingredients.items %}
+      <h5>Partly missing ingredients:</h5>
       <li>{{ key }} {{ values }}</li>
       {% endfor %}
+      {% else %}
+      <li>There is none of partly missing ingredients!</li>
+      {% endif %}
+      <p></p>
   </div>
-  <p> </p>
-<p></p>
- <p>If you're intrested in doing this recipe click <a href="{% url 'recipes:pantry-subtract' %}">HERE</a> to subtract ingredients from your pantry!</p>
+
+
+     {% if missing_ingredients or partly_missing_ingredients.items %}
+
+<h5>You don't have enough ingredients in your pantry.
+
+    {% else %}
+
+    <h5>Great, you have all ingredients needed to make this recipe.
+        Click
+        <a href="{% url 'recipes:pantry-subtract' recipe.pk %}">HERE</a>
+        to remove all ingredients that will be used to prepare.
+    </h5>
+
+
+     {% endif %}
+
 
 {% endblock %}
