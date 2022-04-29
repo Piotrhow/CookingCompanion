@@ -2,13 +2,49 @@
 {% block title %} Recipe List {% endblock title%}
 
 {% block recipe_list %}
-  <h1>RECIPE LIST:</h1>
-  <h3><ol>
+<div class="py-1 text-center container">
+<div class="row py-lg-5">
+  <div class="col-md-8 mx-auto">
+      <h1 class="fw-light">RECIPE LIST:</h1>
+        {% for recipe in recipe_list %}
+
+          <p class="lead text-muted"><br>
+            <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a></p>
+
+        {% endfor %}
+  </div>
+</div>
+</div>
+
+<div class="album py-5 bg-light">
+
     {% for recipe in recipe_list %}
-      <li>
-        <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a>
-      </li>
-    {% endfor %}
-  </ol></h3>
+    <div class="container"><b>{{ recipe.name }}</b>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <ul class="list-group">
+
+                        </ul>
+                            </p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+      <div class="py-1 text-center container">
+        <h5 class="lead text-muted">
+            <div class="fw-light">
+                <p><b>Don't know what to cook? With CookingCompanion it's not a problem!</p>
+                <p>Just pick the ingredients you want to use and we will suggest something for you:</b></p>
+                <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-info">Go to pantry</button></a>
+            </div>
+        </h5>
+    </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -8,7 +8,8 @@
     <div class="row py-lg-5">
         <div class="col-md-8 mx-auto">
         <h3 class="fw-light">Let's see what you can cook with:</h3>
-            {% for pantry_ingredient in pantry_ingredients %}
+            {{ ingredients_chosen }}
+            {% for pantry_ingredient in ingredients_chosen %}
             <button type="button" class="btn btn-info btn-sm" disabled >{{pantry_ingredient}}</button>
             {% endfor %}
       </div>
