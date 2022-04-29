@@ -1,3 +1,4 @@
+
 {% extends "core/base.html" %}
 {% block title %} Pantry of {{user.username}}  {% endblock title%}
 {% block pantry_detail %}
@@ -22,10 +23,13 @@
             <div class="fw-light">
                 <p><b>Don't know what to cook? With CookingCompanion it's not a problem!</b></p>
                 <p><b>Just pick the ingredients you want to use, and we will suggest something for you:</b></p>
-                <a href="{% url 'core:pantry-detail-form' %}"><button type="button" class="btn btn-sm btn-outline-info">Enable checkboxes</button></a>
+                <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-warning">Disable checkboxes</button></a>
+                <i><p>moze jeszcze select all dodac??</p></i>
             </div>
         </h5>
     </div>
+<form action="{% url 'core:pantry-check' %}" method="POST" class="form-inline-center" role="form">{% csrf_token %}
+
     {% for key, value in ingredient_fits_category.items %}
     <div class="container"><b>{{ key }}</b>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -37,22 +41,33 @@
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     {{ val }}
-                                        <div class="btn-group">
-                                            <a href="{% url 'core:update' val.id %}"><button type="button" class="btn btn-sm btn-outline-secondary">Modify</button></a>
-                                            <a href="{% url 'core:delete' val.id %}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                                    <input type="checkbox" name="ing_{{ val.id }}" value="{{ val.id }}" class="form-check-input-inline me-1" >
                                 </li>
                         </ul>
                             </p>
                         {% endfor %}
-                        <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-danger">Delete all from this category</button></a>
-                        <i> jeszcze nie gotowe...</i>
-                    </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
+        <div class="py-1 text-center container">
+        <h5 class="lead text-muted">
+            <div class="fw-light">
+<!--                <b>Pick the ingredients you want to use:</b>-->
+                <input type="submit" value="Check out recipes" class="btn btn-outline-info">
+<!--                    <a href="{% url 'core:pantry-check' %}"><button type="button" class="btn btn-outline-secondary">Check out recipes</button></a>-->
+            </div>
+        </h5>
+    </div>
+</form>
 </div>
 
+
+
+
+
 {% endblock %}
+
