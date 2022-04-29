@@ -9,12 +9,12 @@ from django.db import IntegrityError
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from core.models import Pantry, PantryIngredient
-from recipes.models import Ingredient, IngredientCategory
+from recipes.models import Ingredient, IngredientCategory, Recipe, RecipeIngredient
 
 EMPTY_MSG = 'It looks like you don\'t have anything yet.'
 DUPLICATE_MSG = 'Sorry... It looks like you already have that item. Try updating the existing amount instead.'
 WRONG_NAME_MSG = 'Something\'s wrong. Try again and make sure you don\'t make any typos.'
-
+CHOOSE_STH_MSG = 'Ups, looks like you didn\'t choose  anything...'
 
 # READ PANTRY VIEW - wyświetlanie widoku Pantry dla danego Usera
 @login_required()
@@ -44,10 +44,6 @@ def pantry_detail(request):
 
 
 # CREATE PANTRY INGREDIENT - widok dodawania elementów do Pantry
-def set_cookie(param, ingredient_id):
-	pass
-
-
 def pantryingredient_create(request):
 	id = request.user.id
 	pantry = get_object_or_404(Pantry, user_id=id)
@@ -158,74 +154,78 @@ def pantryingredient_update(request, pk):
 # READ PANTRY VIEW - WITH CHECKBOXES AND FORM
 def pantry_detail_form(request):
 	id = request.user.id
-	p = get_object_or_404(Pantry, user_id=id)
-	pantry_id = p.id
-	pi_all = PantryIngredient.objects.filter(pantry_id=pantry_id)
+	pantry = get_object_or_404(Pantry, user_id=id)
+	pantryingredients_all = PantryIngredient.objects.filter(pantry_id=pantry.id)
 	categories_all = IngredientCategory.objects.all()
-	ingredients = Ingredient.objects.all()
 
+	# POBIERANIE Z CHECKBOX'ÓW LISTY ID - przekazane na następny widok metodą POST
 	if request.method == "POST":
+		# try:
 		ingredients_chosen = (request.POST.getlist('ingredients_check[]'))  # pobieranie od usera
-		# print(ingredients_chosen)
-		for ingredient_chosen in ingredients_chosen:
-			# print(ingredient_chosen)
-			p = PantryIngredient.objects.get(pk=ingredient_chosen)
-			print(p)
-		base_url = reverse('core:pantry-check')
-		query_list = urlencode({'ingredients_chosen': ingredients_chosen})
-		url = '{}?{}'.format(base_url, query_list)
-		return redirect(url)
+		res = redirect('core:pantry-check')
+		res.set_cookie("ingredients_chosen", ingredients_chosen)
+		return res
+		# except ValueError:
+		# 	valueerror_flag = 1
 
-	print(request.POST)
-	ingredients_chosen = (request.GET.get('ingredients_check[]'))  # pobieranie od usera
+		# res = redirect('core:pantry-detail-form')
+		# res.set_cookie("valueerror_flag", valueerror_flag)
+		# return res
 
-	# if ingredients_chosen:
-	# 	array = []
-	# 	for ingredient_chosen in ingredients_chosen:
-	# 		p = PantryIngredient.objects.get(pk=ingredient_chosen)
-	# 		array.append(p)
-	# 	print(array)
-	# 	return render(
-	# 		request,
-	# 		'core/pantry_check.html',
-	# 		context={
-	# 			'ingredients': ingredients,
-	# 			'pantry_ingredients': array,
-	# 		}
-	# 	)
+	else:
+		# Podział pantryingredients na kategorie
+		dict = {}
+		for category in categories_all:
+			ingredient_fits_category = pantryingredients_all.filter(ingredient__category_id=category.id)
+			if ingredient_fits_category:
+				dict[category.name] = ingredient_fits_category
 
-	dict = {}
-	for category in categories_all:
-		ingredient_fits_category = pi_all.filter(ingredient__category_id=category.id)
-		if ingredient_fits_category:
-			dict[category.name] = ingredient_fits_category
+		res = render(
+			request,
+			'core/pantry_detail_form.html',
+			context={
+				'empty_msg': EMPTY_MSG,
+				'choose_sth_msg': CHOOSE_STH_MSG,
+				'pantry_ingredients': pantryingredients_all,
+				'categories_all': categories_all,
+				'ingredient_fits_category': dict,
+			}
+		)
 
-	return render(
-		request,
-		'core/pantry_detail_form.html',
-		context={
-			'pantry_ingredients': pi_all,
-			'empty_msg': EMPTY_MSG,
-			'categories_all': categories_all,
-			'ingredient_fits_category': dict,
-		}
-	)
+		res.delete_cookie("ingredients_chosen")
+		res.delete_cookie("valuerror_flag")
+
+		return res
 
 
 # CHECK AND COMPARE PANTRYINGREDIENTS WITH RECIPES
 def pantryingredient_check(request):
-	ingredients_chosen = request.GET.getlist('p')
+	recipes_all = Recipe.objects.all()
+	id = request.user.id
+	pantry = get_object_or_404(Pantry, user_id=id)
+	pantryingredients_all = PantryIngredient.objects.filter(pantry_id=pantry.id)
+	ingredients_chosen = request.COOKIES.get("ingredients_chosen", 0)
 
-	# for ingredient_chosen in ingredients_chosen:
-	# 	print(ingredient_chosen)
+	# oczyszczanie listy
+	x = ingredients_chosen.replace("[]","")
+	x = x.replace("']","")
+	x = x.replace("['","")
+	x = x.replace("', '", " ")
+	ingredients_chosen = x.split()
+
+	array = []
+	for id in ingredients_chosen:
+		ingredient_chosen = PantryIngredient.objects.get(id=id)
+		array.append(ingredient_chosen)
 
 	return render(
 		request,
 		'core/pantry_check.html',
 		context={
-			# 'pantryingredient': pi,
-			# 'ingredient': ingredient,
-			'ingredients_chosen': ingredients_chosen,
-			'pantry_ingredients': 'array',
-		}
+			'recipes_all': recipes_all,
+			'ingredients_chosen': array,
+			'pantryingredients_all': pantryingredients_all,
+		},
 	)
+
+
