@@ -23,11 +23,19 @@
 <div class="py-1 text-center container">
 <div class="row py-lg-5">
   <div class="col-md-8 mx-auto">
-      <h4 class="fw-light">RECIPE LIST:</h4>
-        {% for recipe in recipes_all %}
+      <h4 class="fw-light">SORTED RECIPE LIST:</h4>
+        {% for key, values in matching.items %}
 
-          <p class="lead text-muted"><br>
-            <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a></p>
+      <div class="img-one">
+        <a href="{% url 'recipes:recipe-detail' key.pk %}" target="blank">
+        <img id="redirectimg"
+             class="alignnone size-full wp-image-1303"
+             src="{{ key.picture.url }} "
+             style="cursor: pointer;"
+        </a>
+
+      <p class="lead text-muted"><br>
+           <a href="{% url 'recipes:recipe-detail' key.pk %}">{{ key }}</a>
 
         {% endfor %}
   </div>
