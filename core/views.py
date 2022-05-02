@@ -218,6 +218,32 @@ def pantryingredient_check(request):
 		ingredient_chosen = PantryIngredient.objects.get(id=id)
 		array.append(ingredient_chosen)
 
+	matching = dict()
+	for recipe in recipes_all:
+		recipe_matching = 0
+		rec_id = recipe.id
+		recipe_ingredients = RecipeIngredient.objects.filter(recipe_id=rec_id)
+		for recipe_ingredient in recipe_ingredients:
+			for ingredient_chosen in pantryingredients_all:
+				if ingredient_chosen.ingredient.name == recipe_ingredient.ingredient.name:
+					if ingredient_chosen.quantity >= recipe_ingredient.quantity:
+						recipe_matching += 2
+					else:
+						recipe_matching -= 1
+				else:
+					continue
+		matching[recipe] = recipe_matching
+
+	sorted_values = sorted(matching.values(), reverse=True)  # sort dict from high to low
+	sorted_recipes = {}
+
+	for i in sorted_values:
+		for k in matching.keys():
+			if matching[k] == i:
+				sorted_recipes[k] = matching[k]
+
+	print(sorted_recipes)
+
 	return render(
 		request,
 		'core/pantry_check.html',
@@ -225,6 +251,7 @@ def pantryingredient_check(request):
 			'recipes_all': recipes_all,
 			'ingredients_chosen': array,
 			'pantryingredients_all': pantryingredients_all,
+			'matching': sorted_recipes,
 		},
 	)
 
