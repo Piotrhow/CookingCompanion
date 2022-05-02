@@ -3,38 +3,41 @@
 {% block title %} Pantry of {{user.username}}  {% endblock title%}
 {% block pantry_detail %}
 
-<div class="py-1 text-center container">
-<div class="row py-lg-5">
-  <div class="col-md-8 mx-auto">
-      <h1 class="fw-light">Welcome to your pantry !</h1>
+<div class="py-1 text-center bg-light container">
+    <div class="col-md-8 mx-auto">
+      <h1 class="display-4">Welcome to your pantry !</h1>
         {% if ingredient_fits_category %}
           <p class="lead text-muted">These are the products you've got so far. <br></p>
         {% else %}
           <p class="lead text-muted">{{ empty_msg }}</p>
         {% endif %}
-        <a href="{% url 'core:create' %}"><button class="btn btn-outline-info">Add something new</button></a>
-  </div>
-</div>
+        <a href="{% url 'core:create' %}"><button class="btn btn-sm btn-outline-info">Add something new</button></a>
+    </div>
+        <hr>
+        <p class="lead text-muted"><b>Looking for a recipe?</b> Go to recipe <a href="{% url 'recipes:recipe-list' %}">list</a>!</p>
+        <hr>
+    <div class="py-1 text-center container">
+        <h6 class="lead text-muted">
+            <div class="fw-light">
+                <p><b>Don't know what to cook?</b> With CookingCompanion it's not a problem!<br>
+                Just pick the ingredients you want to use, and we will suggest something for you:</p>
+                <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-warning">Disable checkboxes</button></a>
+                <i><p>NOTE TO SELF: moze select all dodac??</p></i>
+            </div>
+        </h6>
+    </div>
 </div>
 
+<!--DISPLAY THE PANTRY INGREDIENTS IN THE USER'S PANTRY-->
 <div class="album py-5 bg-light">
-    <div class="py-1 text-center container">
-        <h5 class="lead text-muted">
-            <div class="fw-light">
-                <p><b>Don't know what to cook? With CookingCompanion it's not a problem!</b></p>
-                <p><b>Just pick the ingredients you want to use, and we will suggest something for you:</b></p>
-                <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-warning">Disable checkboxes</button></a>
-                <i><p>moze jeszcze select all dodac??</p></i>
-            </div>
-        </h5>
-    </div>
 <form method="POST" class="form-inline-center" role="form">{% csrf_token %}
     {% for key, value in ingredient_fits_category.items %}
-    <div class="container"><b>{{ key }}</b>
+    <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #f0f5f5">
+                        <h3 class="lead "><b>{{ key }}</b></h3>
                         {% for val in value %}
                         <p class="card-text">
                             <ul class="list-group">
@@ -43,23 +46,21 @@
                                     <input type="checkbox" name="ingredients_check[]" value="{{ val.id }}" class="form-check-input-inline me-1" >
                                 </li>
                             </ul>
-                            </p>
+                        </p>
                         {% endfor %}
-                    </div>
-                </div>
             </div>
-        </div>
+        </div><br>
     </div>
     {% endfor %}
+    </div>
 </div>
-
-
-    <div class="py-1 text-center container">
+<!--SUBMIT-->
+<div class="py-1 text-center container">
         <h5 class="lead text-muted">
-            jak dodać info że nic nie wybrano...?
-            {% if valueerror_flag == 1 %}
-            <p>{{ choose_sth_msg }}</p>
-            {% endif %}
+<!--            <i>NOTE TO SELF: jak dodać info że nic nie wybrano...?</i>-->
+<!--            {% if valueerror_flag == 1 %}-->
+<!--            <p>{{ choose_sth_msg }}</p>-->
+<!--            {% endif %}-->
             <div class="fw-light">
                 <input type="submit" value="Check out recipes" class="btn btn-outline-info">
             </div>

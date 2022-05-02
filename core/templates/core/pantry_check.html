@@ -1,48 +1,41 @@
 {% extends "core/base.html" %}
-{% block title %} {% endblock %}
+{% block title %} Pantry of {{user.username}} - check {% endblock %}
 {% load static %}
 
 {% block pantryingredient_check %}
 
-<section class="py-1 text-center container">
+<div class="py-1 text-center bg-light container">
+    <br>
+    <div class="col-md-8 mx-auto">
+        {% for pantry_ingredient in ingredients_chosen %}
+        <button type="button" class="btn btn-outline-info btn-sm" disabled >{{pantry_ingredient}}</button>
+        {% endfor %}
+    </div>
+        <br>
+        <p class="lead text-muted"><b>Let's see what you can cook...</b></p>
+        <hr>
+</div>
+
+<!--LIST OF SORTED RECIPES-->
+<div class="py-1 text-center bg-light container">
     <div class="row py-lg-5">
         <div class="col-md-8 mx-auto">
-        <h3 class="fw-light">Let's see what you can cook with:</h3>
-            {% for pantry_ingredient in ingredients_chosen %}
-            <button type="button" class="btn btn-info btn-sm" disabled >{{pantry_ingredient}}</button>
+            {% for key, values in matching.items %}
+                <div class="img-one">
+                    <a href="{% url 'recipes:recipe-detail' key.pk %}" target="blank">
+                        <img id="redirectimg"
+                             class="alignnone size-full wp-image-1303"
+                             src="{{ key.picture.url }} "
+                             style="cursor: pointer;">
+                        <p class="lead text-muted">{{ key }}</p>
+                    </a>
             {% endfor %}
-      </div>
+                </div>
+        </div>
     </div>
+        <hr>
         <p class="lead text-muted"> Wan't to choose something else? </p>
-        <a href="{% url 'core:pantry-detail-form' %}" ><button class="btn btn-danger btn-sm">Back to pantry view</button></a>
-<hr>
-</section>
-
-<section class="py-1 text-center container">
-
-<div class="py-1 text-center container">
-<div class="row py-lg-5">
-  <div class="col-md-8 mx-auto">
-      <h4 class="fw-light">SORTED RECIPE LIST:</h4>
-        {% for key, values in matching.items %}
-
-      <div class="img-one">
-        <a href="{% url 'recipes:recipe-detail' key.pk %}" target="blank">
-        <img id="redirectimg"
-             class="alignnone size-full wp-image-1303"
-             src="{{ key.picture.url }} "
-             style="cursor: pointer;"
-        </a>
-
-      <p class="lead text-muted"><br>
-           <a href="{% url 'recipes:recipe-detail' key.pk %}">{{ key }}</a>
-
-        {% endfor %}
-  </div>
+        <a href="{% url 'core:pantry-detail-form' %}" ><button class="btn btn-outline-danger btn-sm">Back to pantry view</button></a>
 </div>
-</div>
-
-<hr>
-</section>
 
 {% endblock %}
