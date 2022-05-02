@@ -5,6 +5,7 @@ from recipes.models import Recipe, RecipeIngredient, Ingredient
 def populate_recipes():
 	Recipe.objects.create(
 		name="Margherita Pizza",
+		picture="recipe_images/pizza.jpg",
 		description='''
 		<b>Prepare Pizza Dough: </b>
 		<br>
@@ -65,6 +66,7 @@ def populate_recipes():
 	)
 	Recipe.objects.create(
 		name="Easy Three-Ingredient Tomato Soup",
+		picture="recipe_images/tomato_soup.jpg",
 		description='''
 		Melt butter over medium heat in a Dutch oven or large saucepan.
 		<br>
@@ -80,6 +82,7 @@ def populate_recipes():
 	)
 	Recipe.objects.create(
 		name="Fluffy Pancakes from Scratch",
+		picture="recipe_images/pancakes.jpg",
 		description='''
 		<b>MAKE BATTER</b>
 		Whisk flour, sugar, baking powder, and the salt in a medium bowl.
