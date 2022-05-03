@@ -35,7 +35,9 @@
         <div class="col-8 mx-auto">
             <div class="container">
                 <h4 class="fw-light">Description:</h4>
+                {% autoescape off %}
                 <p class="text-muted">{{ recipe.description }}</p>
+                {% endautoescape %}
             </div>
         </div>
     </div>

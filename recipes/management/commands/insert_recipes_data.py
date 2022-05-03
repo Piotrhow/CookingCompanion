@@ -130,7 +130,7 @@ def populate_recipeingredients():
 	eggs = Ingredient.objects.get(name="eggs")
 	vanilla_extract = Ingredient.objects.get(name="vanilla extract")
 
-	recipe = Recipe.objects.get(name="Margherita Pizza")
+	recipe = Recipe.objects.get(name="Pizza Margherita")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=flour, quantity="300")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=sugar, quantity="5")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=yeast, quantity="15")
@@ -143,7 +143,7 @@ def populate_recipeingredients():
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=parmigiano_reggiano_cheese, quantity="300")
 
 	#
-	recipe = Recipe.objects.get(name="Easy Three-Ingredient Tomato Soup")
+	recipe = Recipe.objects.get(name="Easy Tomato Soup")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=butter, quantity="15")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=onions, quantity="1")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=can_tomatoes, quantity="400")

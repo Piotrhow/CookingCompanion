@@ -24,6 +24,7 @@
         </div>
         <div class="col-5 mx-auto">
             <h5 class="fw-light">What you have in your pantry:</h5>
+                {% if pantry_ingredients %}
                     <ul>
                         {% for pantry_ingredient in pantry_ingredients %}
                             <li class="text-muted">
@@ -31,6 +32,9 @@
                             </li>
                         {% endfor %}
                     </ul>
+                {% else %}
+                    <p class="text-muted">Oops... looks like your pantry is empty.</p>
+                {% endif %}
             <p class="lead text-muted">Something is not right? Go to
                 <a href="{% url 'core:pantry-detail' %}">pantry</a>!</p>
         </div>
@@ -41,13 +45,13 @@
 <!--    CHECK AND COMPARE LOGIC-->
     <div class="text-center">
         {% if missing_ingredients or partly_missing_ingredients.items %}
-            <p class="lead text-muted">Oops... looks like you don't have enough ingredients in your pantry.</p>
+            <p class="lead text-muted">Oops... looks like you don't have enough ingredients to prepare this recipe.</p>
     </div>
     <div class="row">
         <div class="col-1"></div>
         <div class="col-5 mx-auto">
+            <h5 class="fw-light">What you don't have at all:</h5>
                 {% if missing_ingredients %}
-                    <h5 class="fw-light">What you don't have at all:</h5>
                     {% for missing_ingredient in missing_ingredients %}
                         <li class="text-muted">
                             {{ missing_ingredient }}
@@ -58,8 +62,8 @@
                 {% endif %}
         </div>
         <div class="col-5 mx-auto">
+            <h5 class="fw-light">Partly missing ingredients:</h5>
                 {% if partly_missing_ingredients.items %}
-                    <h5 class="fw-light">Partly missing ingredients:</h5>
                     {% for key, values in partly_missing_ingredients.items %}
                              <li class="text-muted">
                                  {{ key }} {{ values }}
@@ -76,14 +80,15 @@
     <div class="row text-center">
         <div class="col mx-auto">
             {% if missing_ingredients or partly_missing_ingredients.items %}
-                <p class="lead text-muted">Do you wan't to print out a list of things you need to buy?
-                    Click <b>here</b>...
-<!--                    NOTE TO SELF: brak logiki tworzenia pliku-->
+            <br>
+<!--            <p class="lead text-muted">Do you wan't to print out a <b>SHOPPING LIST</b>?-->
+<!--                    Click >here<..-->
+<!--                    NOTE TO SELF: brak logiki EXPORTU pliku-->
 <!--UPDATING: SUBSTRACT THE INGREDIENTS FROM PANTRY-->
             {% else %}
-            <p class="lead text-muted"><b>Great!</b> It looks like you have <b>all the ingredients</b>
+            <p class="lead text-muted"><b>Great!</b> You have <b>all the ingredients</b>
                 needed to make this recipe!</p>
-            <p class="lead text-muted">Click <a href="{% url 'recipes:pantry-subtract' recipe.id %}">HERE</a>
+            <p class="lead text-muted">Click <a href="{% url 'recipes:pantry-subtract' recipe.id %}">here</a>
                 to remove from your pantry everything that will be consumed.</p>
             {% endif %}
         </div>
