@@ -146,7 +146,7 @@ def populate_recipeingredients():
 	recipe = Recipe.objects.get(name="Easy Three-Ingredient Tomato Soup")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=butter, quantity="15")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=onions, quantity="1")
-	RecipeIngredient.objects.create(recipe=recipe, ingredient=can_tomatoes, quantity="1")
+	RecipeIngredient.objects.create(recipe=recipe, ingredient=can_tomatoes, quantity="400")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=water, quantity="300")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=salt, quantity="5")
 	#
