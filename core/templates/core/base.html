@@ -29,7 +29,7 @@
                 <div class="navbar-nav ml-auto">
 
                    {% if user.is_authenticated %}
-                    <a href="#" class="nav-item nav-link">Profile</a>
+                    <a href="{% url 'users-profile' %}" class="nav-item nav-link">Profile</a>
                     <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
                   {% else %}
                     <a href="{% url 'login' %}" class="nav-item nav-link">Sign in</a>
@@ -48,7 +48,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-            {% endif %}
+        {% endif %}
+
         {% block pantry_detail %}{% endblock %}
         {% block pantryingredient_delete %}{% endblock %}
         {% block pantryingredient_form %}{% endblock %}
@@ -58,7 +59,10 @@
       </div>
     </div>
   </div>
-
+<div class="text-center container">
+    <br>
+    <p class="text-muted">This is CookingCompanion 1.0 - powered by KB & PH for SDA.</p>
+</div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -66,6 +70,5 @@
 
 <!-- A plugin for password show/hide  -->
    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
-
 </body>
 </html>

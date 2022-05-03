@@ -5,6 +5,7 @@ from recipes.models import Recipe, RecipeIngredient, Ingredient
 def populate_recipes():
 	Recipe.objects.create(
 		name="Margherita Pizza",
+		picture="recipe_images/pizza.jpg",
 		description='''
 		<b>Prepare Pizza Dough: </b>
 		<br>
@@ -65,6 +66,7 @@ def populate_recipes():
 	)
 	Recipe.objects.create(
 		name="Easy Three-Ingredient Tomato Soup",
+		picture="recipe_images/tomato_soup.jpg",
 		description='''
 		Melt butter over medium heat in a Dutch oven or large saucepan.
 		<br>
@@ -80,6 +82,7 @@ def populate_recipes():
 	)
 	Recipe.objects.create(
 		name="Fluffy Pancakes from Scratch",
+		picture="recipe_images/pancakes.jpg",
 		description='''
 		<b>MAKE BATTER</b>
 		Whisk flour, sugar, baking powder, and the salt in a medium bowl.
@@ -127,7 +130,7 @@ def populate_recipeingredients():
 	eggs = Ingredient.objects.get(name="eggs")
 	vanilla_extract = Ingredient.objects.get(name="vanilla extract")
 
-	recipe = Recipe.objects.get(name="Margherita Pizza")
+	recipe = Recipe.objects.get(name="Pizza Margherita")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=flour, quantity="300")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=sugar, quantity="5")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=yeast, quantity="15")
@@ -140,10 +143,10 @@ def populate_recipeingredients():
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=parmigiano_reggiano_cheese, quantity="300")
 
 	#
-	recipe = Recipe.objects.get(name="Easy Three-Ingredient Tomato Soup")
+	recipe = Recipe.objects.get(name="Easy Tomato Soup")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=butter, quantity="15")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=onions, quantity="1")
-	RecipeIngredient.objects.create(recipe=recipe, ingredient=can_tomatoes, quantity="1")
+	RecipeIngredient.objects.create(recipe=recipe, ingredient=can_tomatoes, quantity="400")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=water, quantity="300")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=salt, quantity="5")
 	#

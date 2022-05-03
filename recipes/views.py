@@ -45,7 +45,6 @@ def recipe_check(request, id):
 
             residual = residual.exclude(id=recip_ingred.id)          # exclude not missing ingredients
 
-
     return render(
         request,
         'recipes/recipe_check.html',
@@ -67,8 +66,14 @@ def pantry_subtraction(request, id):
     pantry = Pantry.objects.filter(user__id=current_user.id)
     pi = PantryIngredient.objects.filter(pantry__in=pantry)
 
+    print(pantry)
+    print(pi)
+    print(ri)
+
     for recip_ingred in ri:
         pantry_ingred = pi.filter(ingredient__id=recip_ingred.ingredient.id).first()
+        print(recip_ingred.ingredient.id)
+        print(pantry_ingred)
         res = pantry_ingred.quantity - recip_ingred.quantity
         pantry_ingred.quantity = res
         if res >= 0:
@@ -85,45 +90,6 @@ def pantry_subtraction(request, id):
         }
     )
 
-
-def recipe_matching(request):
-    current_user = request.user
-    recipes = Recipe.objects.all()
-    pantry = Pantry.objects.filter(user__id=current_user.id)
-    pi = PantryIngredient.objects.filter(pantry__in=pantry)
-    matching = dict()
-
-    for recipe in recipes:
-        recipe.matching = 0
-        recid = recipe.id
-        ri = RecipeIngredient.objects.filter(recipe_id=recid)
-        for recip_ingred in ri:
-            pantry_ingred = pi.filter(ingredient__id=recip_ingred.ingredient.id).first()
-            if pantry_ingred:
-                if pantry_ingred.quantity >= recip_ingred.quantity:
-                    recipe.matching += 1
-                else:
-                    continue
-            else:
-                continue
-        matching[recipe] = recipe.matching           # save recipe with it's matching value
-
-    sorted_values = sorted(matching.values(), reverse=True)           # sort dict from high to low
-    sorted_recipes = {}
-
-    for i in sorted_values:
-        for k in matching.keys():
-            if matching[k] == i:
-                sorted_recipes[k] = matching[k]
-                break
-
-    return render(
-        request,
-        'recipes/recipe_matching.html',
-        context={
-            'recipes': recipes,
-            'matching': sorted_recipes,
-        }
-    )
+# def recipe_shoppinglist(request):
 
 

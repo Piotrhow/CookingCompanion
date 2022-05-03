@@ -2,56 +2,62 @@
 {% block title %} {{recipe.name}} {% endblock title%}
 
 {% block recipe_detail %}
-<br>
-<p class="lead text-muted"><a href="{% url 'recipes:recipe-list' %}">Back to the list</a>!</p>
-<div class="py-1 text-center container">
-  <div class="row">
+
+<div class="py-1 text-center bg-light container">
+    <div class="row">
       <div class="col-md-8 mx-auto">
-    <h2 class="fw-light"> {{recipe.name}} </h2>
+        <h2 class="display-4"> {{recipe.name}} </h2>
       </div>
-  </div>
+    </div>
+    <!--IMAGE DISPLAY-->
+    <div class="text-center">
+        <img id="redirectimg"
+             class="img-fluid"
+             src="{{ recipe.picture.url }} "
+             style="cursor: pointer;">
+    </div>
+    <hr>
 </div>
 
-<div class="img-one">
-        <img id="redirectimg"
-             class="alignnone size-full wp-image-1303"
-             src="{{ recipe.picture.url }} "
-             style="cursor: pointer;"
-      </div>
-
-<hr>
-    <div class="container">
-      <h4 class="fw-light">INGREDIENTS:</h4>
-
-    <ol>
-      {% for recipe_ingredient in recipe_ingredients %}
-      <b><li class="lead text-muted bold">
-        <p >{{ recipe_ingredient }}</p></b>
-      </li>
-      {% endfor %}
-    </ol>
-  </div>
-<hr>
-
-  <div class="container">
-  <h4 class="fw-light">DESCRIPTION:</h4>
-    <p class="text-muted">{{ recipe.description }}</p>
-  </div>
-<hr>
-
-        <div class="container">
-            <div class="row row-cols-2 g-3">
-                <div class="col">
-                    <h5 class="fw-light">Want to keep looking?</h5>
-                      <p class="lead text-muted">No problem, let's go back to the
-                        <a href="{% url 'recipes:recipe-list' %}">list</a>!</p>
-                </div>
-                <div class="col">
-                    <h5 class="fw-light">Like this recipe?</h5>
-                      <p class="lead text-muted">Awesome! Let's see what you need to buy to prepare it:
-                        <a href="{% url 'recipes:recipe-check' recipe.pk %}">check</a>!</p>
-                </div>
+<!--RECIPE INGREDIENTS & DESCRIPTION-->
+<div class="py-1 bg-light container">
+    <div class="row">
+        <div class="col-4 mx-auto">
+            <h4 class="fw-light">Ingredients:</h1>
+            <ul>
+              {% for recipe_ingredient in recipe_ingredients %}
+                  <li class="text-muted">
+                    <p>{{ recipe_ingredient }}</p>
+                  </li>
+              {% endfor %}
+            </ul>
+        </div>
+        <div class="col-8 mx-auto">
+            <div class="container">
+                <h4 class="fw-light">Description:</h4>
+                {% autoescape off %}
+                <p class="text-muted">{{ recipe.description }}</p>
+                {% endautoescape %}
             </div>
         </div>
+    </div>
+<hr>
+<!--REDIRECTING-->
+<footer class="container">
+    <div class="row row-cols-2 g-3">
+        <div class="col-6">
+            <h5 class="fw-light">Want to keep looking?</h5>
+              <p class="lead text-muted">No problem, let's go back to the
+                <a href="{% url 'recipes:recipe-list' %}">recipe list</a>
+                  or
+                <a href="{% url 'core:pantry-detail' %}">your pantry</a>!</p>
+        </div>
+        <div class="col-6">
+            <h5 class="fw-light" >Like this recipe? Awesome! </h5>
+              <p class="lead text-muted">Let's see what you need to buy to prepare it:
+                <a href="{% url 'recipes:recipe-check' recipe.pk %}">check</a>!</p>
+        </div>
+    </div>
+</footer>
 
 {% endblock %}

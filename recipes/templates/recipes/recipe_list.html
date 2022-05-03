@@ -2,40 +2,45 @@
 {% block title %} Recipe List {% endblock title%}
 
 {% block recipe_list %}
-<div class="py-1 text-center container">
-<div class="row py-lg-5">
-  <div class="col-md-8 mx-auto">
-      <h1 class="fw-light">RECIPE LIST:</h1>
+
+<div class="py-1 text-center bg-light container">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <h1 class="display-4">Recipe list</h1>
+            <p class="lead text-muted">Find a recipe you like, and let CookingCompanion help you check
+            <br>if you've got what is needed to prepare it. <br></p>
+            <hr>
+<!--        <i>NOTE TO SELF: tu doddać pasek z wyszukiwaniem?</i>-->
+        </div>
+    </div>
+    <div class="row">
+        <!--DISPLAY RECIPE LIST IN LOOP-->
         {% for recipe in recipe_list %}
-
-    <div class="img-one">
-        <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
-        <img id="redirectimg"
-             class="alignnone size-full wp-image-1303"
-             src="{{ recipe.picture.url }} "
-             style="cursor: pointer;"
-        </a>
-      </div>
-
-          <p class="lead text-muted"><br>
-            <a href="{% url 'recipes:recipe-detail' recipe.pk %}">{{ recipe.name }}</a></p>
-
-        {% endfor %}
-  </div>
-</div>
-</div>
-
-<div class="album py-5 bg-light">
-    <div class="py-1 text-center container">
-        <h5 class="lead text-muted">
-            <div class="fw-light">
-                <p><b>Don't know what to cook? With CookingCompanion it's not a problem!</p>
-                <p>Just pick the ingredients you want to use and we will suggest something for you:</b></p>
-                <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-info">Go to pantry</button></a>
+            <div class="col-4">
+                <div class="img-one">
+                    <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
+                        <img id="redirectimg"
+                             class="rounded"
+                             src="{{ recipe.picture.url }} "
+                             style="cursor: pointer;width:180px;height:120px;">
+                        <p class="lead text-muted"><b>{{ recipe.name }}</b></p>
+                    </a>
+                </div>
             </div>
-        </h5>
-    </div>
+        {% endfor %}
     </div>
 </div>
+
+<!--FOOTER WITH REDIRECTING TO THE PANTRY VIEW-->
+<footer class="py-1 text-center bg-light container">
+    <hr>
+    <h5 class="lead text-muted">
+        <div class="fw-light">
+            <p><b>Don't know what to cook?</b> With CookingCompanion it's not a problem!<br>
+            Just pick the ingredients you want to use, and we will suggest something for you:</p>
+            <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-info">Go to pantry</button></a>
+        </div>
+    </h5>
+</footer>
 
 {% endblock %}
