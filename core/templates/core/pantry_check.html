@@ -24,10 +24,10 @@
                 <div class="img-one">
                     <a href="{% url 'recipes:recipe-detail' key.pk %}" target="blank">
                         <img id="redirectimg"
-                             class="alignnone size-full wp-image-1303"
+                             class="rounded"
                              src="{{ key.picture.url }} "
-                             style="cursor: pointer;">
-                        <p class="lead text-muted">{{ key }}</p>
+                             style="cursor: pointer;width:180px;height:120px;">
+                        <p class="lead text-muted"><b>{{ key }}</b></p>
                     </a>
             {% endfor %}
                 </div>
