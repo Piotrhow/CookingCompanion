@@ -67,8 +67,15 @@ def pantry_subtraction(request, id):
     pantry = Pantry.objects.filter(user__id=current_user.id)
     pi = PantryIngredient.objects.filter(pantry__in=pantry)
 
+    print(pantry)
+    print(pi)
+    print(ri)
+
+
     for recip_ingred in ri:
         pantry_ingred = pi.filter(ingredient__id=recip_ingred.ingredient.id).first()
+        print(recip_ingred.ingredient.id)
+        print(pantry_ingred)
         res = pantry_ingred.quantity - recip_ingred.quantity
         pantry_ingred.quantity = res
         if res >= 0:

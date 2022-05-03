@@ -14,7 +14,7 @@ from recipes.models import Ingredient, IngredientCategory, Recipe, RecipeIngredi
 EMPTY_MSG = 'It looks like you don\'t have anything yet.'
 DUPLICATE_MSG = 'Sorry... It looks like you already have that item. Try updating the existing amount instead.'
 WRONG_NAME_MSG = 'Something\'s wrong. Try again and make sure you don\'t make any typos.'
-CHOOSE_STH_MSG = 'Ups, looks like you didn\'t choose  anything...'
+CHOOSE_STH_MSG = 'Oops, looks like you didn\'t choose  anything...'
 
 # READ PANTRY VIEW - wyświetlanie widoku Pantry dla danego Usera
 @login_required()
@@ -29,7 +29,7 @@ def pantry_detail(request):
 	for category in categories_all:
 		ingredient_fits_category = pantryingredients_all.filter(ingredient__category_id=category.id)
 		if ingredient_fits_category:
-			dict[category.name] = ingredient_fits_category
+			dict[category] = ingredient_fits_category
 
 	return render(
 		request,
@@ -122,12 +122,52 @@ def pantryingredient_delete(request, pk):
 
 	return render(
 		request,
-		'core/confirm_delete.html',
+		'core/pantry_delete_confirm.html',
 		context={
 			'pantryingredient': pantryingredient,
 			'ingredient': ingredient,
 		}
 	)
+
+
+# DELETE CATEGORY INGREDIENTS - usuwanie wszystkich składnikw z DANEJ KATEGORII
+def pantryingredient_delete_category(request, pk):
+	category = get_object_or_404(IngredientCategory, pk=pk)
+	pantryingredients = PantryIngredient.objects.filter(ingredient__category__id=pk)
+
+	if request.method == "POST":
+		pantryingredients.delete()
+		return redirect('core:pantry-detail')
+
+	return render(
+		request,
+		'core/pantry_delete_confirm_category.html',
+		context={
+			'pantryingredients': pantryingredients,
+			'category': category,
+		}
+	)
+
+
+# DELETE PANTRY INGREDIENTS - usuwanie wszystkich składnikw z PANTRY
+def pantryingredient_delete_pantry(request):
+	id = request.user.id
+	pantry = get_object_or_404(Pantry, user_id=id)
+	pantryingredients = PantryIngredient.objects.filter(pantry=pantry.id)
+
+	if request.method == "POST":
+		pantryingredients.delete()
+		return redirect('core:pantry-detail')
+
+	return render(
+		request,
+		'core/pantry_delete_confirm_pantry.html',
+		context={
+			'pantryingredients': pantryingredients,
+			'pantry': pantry,
+		}
+	)
+
 
 # UPDATE AN INGREDIENT AMOUNT - modyfikowanie wybranego składnika z pantry
 def pantryingredient_update(request, pk):
@@ -201,9 +241,6 @@ def pantry_detail_form(request):
 # CHECK AND COMPARE PANTRYINGREDIENTS WITH RECIPES
 def pantryingredient_check(request):
 	recipes_all = Recipe.objects.all()
-	id = request.user.id
-	pantry = get_object_or_404(Pantry, user_id=id)
-	pantryingredients_all = PantryIngredient.objects.filter(pantry_id=pantry.id)
 	ingredients_chosen = request.COOKIES.get("ingredients_chosen", 0)
 
 	# oczyszczanie listy
@@ -213,21 +250,24 @@ def pantryingredient_check(request):
 	x = x.replace("', '", " ")
 	ingredients_chosen = x.split()
 
+	# tworzenie listy obiektów wybranych w checbox'ach
 	array = []
 	for id in ingredients_chosen:
 		ingredient_chosen = PantryIngredient.objects.get(id=id)
 		array.append(ingredient_chosen)
+	ingredients_chosen = array
 
 	matching = dict()
 	for recipe in recipes_all:
 		recipe_matching = 0
-		rec_id = recipe.id
-		recipe_ingredients = RecipeIngredient.objects.filter(recipe_id=rec_id)
+		recipe_ingredients = RecipeIngredient.objects.filter(recipe_id=recipe.id)
 		for recipe_ingredient in recipe_ingredients:
-			for ingredient_chosen in pantryingredients_all:
-				if ingredient_chosen.ingredient.name == recipe_ingredient.ingredient.name:
+			for ingredient_chosen in ingredients_chosen:
+				if ingredient_chosen.ingredient.id == recipe_ingredient.ingredient.id:
+					print(ingredient_chosen.ingredient.name)
+					recipe_matching += 1
 					if ingredient_chosen.quantity >= recipe_ingredient.quantity:
-						recipe_matching += 2
+						recipe_matching += 1
 					else:
 						recipe_matching -= 1
 				else:
@@ -238,10 +278,9 @@ def pantryingredient_check(request):
 	sorted_recipes = {}
 
 	for i in sorted_values:
-		for k in matching.keys():
-			if matching[k] == i:
-				sorted_recipes[k] = matching[k]
-
+		for key in matching.keys():
+			if matching[key] == i and matching[key] > 0:
+				sorted_recipes[key] = matching[key]
 	print(sorted_recipes)
 
 	return render(
@@ -249,9 +288,8 @@ def pantryingredient_check(request):
 		'core/pantry_check.html',
 		context={
 			'recipes_all': recipes_all,
-			'ingredients_chosen': array,
-			'pantryingredients_all': pantryingredients_all,
-			'matching': sorted_recipes,
+			'ingredients_chosen': ingredients_chosen,
+			'sorted_recipes': sorted_recipes,
 		},
 	)
 

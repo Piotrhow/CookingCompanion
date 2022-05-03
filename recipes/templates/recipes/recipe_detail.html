@@ -19,7 +19,7 @@
     <hr>
 </div>
 
-<!--INGREDIENTS-->
+<!--RECIPE INGREDIENTS & DESCRIPTION-->
 <div class="py-1 bg-light container">
     <div class="row">
         <div class="col-4 mx-auto">
@@ -40,17 +40,19 @@
         </div>
     </div>
 <hr>
-
+<!--REDIRECTING-->
 <footer class="container">
     <div class="row row-cols-2 g-3">
-        <div class="col-4">
+        <div class="col-6">
             <h5 class="fw-light">Want to keep looking?</h5>
               <p class="lead text-muted">No problem, let's go back to the
-                <a href="{% url 'recipes:recipe-list' %}">list</a>!</p>
+                <a href="{% url 'recipes:recipe-list' %}">recipe list</a>
+                  or
+                <a href="{% url 'core:pantry-detail' %}">your pantry</a>!</p>
         </div>
-        <div class="col-8">
-            <h5 class="fw-light" >Like this recipe?</h5>
-              <p class="lead text-muted">Awesome! Let's see what you need to buy to prepare it:
+        <div class="col-6">
+            <h5 class="fw-light" >Like this recipe? Awesome! </h5>
+              <p class="lead text-muted">Let's see what you need to buy to prepare it:
                 <a href="{% url 'recipes:recipe-check' recipe.pk %}">check</a>!</p>
         </div>
     </div>

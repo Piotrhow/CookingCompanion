@@ -2,79 +2,103 @@
 {% block title %} Check&Compare {% endblock title%}
 
 {% block recipe_check %}
-
- <div class="img-one">
-        <img id="redirectimg"
-             class="alignnone size-full wp-image-1303"
-             src="{{ recipe.picture.url }} "
-             style="cursor: pointer;"
-      </div>
-
-<p>{{ text }}</p>
-  <h1> TO PREPARE {{recipe.name}} </h1>
-  <h2>INGREDIENTS:</h2>
-  <div>
-    <ol>
-      {% for recipe_ingredient in recipe_ingredients %}
-      <li>
-        {{ recipe_ingredient }}
-      </li>
-      {% endfor %}
-    </ol>
+<div class="py-1 text-center bg-light">
+    <h1 class="display-4"> To prepare the <br><b>{{recipe.name}}</b>...</h1>
+</div>
+<!--INGREDIENTS FOR THE RECIPE-->
+<div class="py-1 bg-light container">
+    <hr>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-5 mx-auto text">
+            <h5 class="fw-light">What you need:</h5>
+                    <ul>
+                        {% for recipe_ingredient in recipe_ingredients %}
+                            <li class="text-muted">
+                            {{ recipe_ingredient }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+              <p class="lead text-muted">Back to the
+                  <a href="{% url 'recipes:recipe-detail' recipe.pk %}">recipe</a>!</p>
+        </div>
+        <div class="col-5 mx-auto">
+            <h5 class="fw-light">What you have in your pantry:</h5>
+                    <ul>
+                        {% for pantry_ingredient in pantry_ingredients %}
+                            <li class="text-muted">
+                                {{ pantry_ingredient }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+            <p class="lead text-muted">Something is not right? Go to
+                <a href="{% url 'core:pantry-detail' %}">pantry</a>!</p>
+        </div>
+        <div class="col-1"></div>
     </div>
-    <p></p>
-    <p></p>
-<h2>PANTRY:</h2>
-  <div>
-      <ol>
-        {% for pantry_ingredient in pantry_ingredients %}
-        <li>
-          {{ pantry_ingredient }}
-        </li>
-        {% endfor %}
-      </ol>
-  </div>
-  <p> </p>
-<h2>MISSING:</h2>
-  <div>
-    {% if missing_ingredients %}
-      {% for missing_ingredient in missing_ingredients %}
-      <h5>Completely missing ingredients:</h5>
+    <hr>
 
-      <li>{{ missing_ingredient }}</li>
-      {% endfor %}
-      {% else %}
-      <li>There is none of completely missing ingredients!</li>
-      {% endif %}
-
-<p></p>
-      <p></p>
-      {% if partly_missing_ingredients.items %}
-      {% for key, values in partly_missing_ingredients.items %}
-      <h5>Partly missing ingredients:</h5>
-      <li>{{ key }} {{ values }}</li>
-      {% endfor %}
-      {% else %}
-      <li>There is none of partly missing ingredients!</li>
-      {% endif %}
-      <p></p>
-  </div>
-
-
-     {% if missing_ingredients or partly_missing_ingredients.items %}
-
-<h5>You don't have enough ingredients in your pantry.
-
-    {% else %}
-
-    <h5>Great, you have all ingredients needed to make this recipe.
-        Click
-        <a href="{% url 'recipes:pantry-subtract' recipe.pk %}">HERE</a>
-        to remove all ingredients that will be used to prepare.
-    </h5>
-
-
-     {% endif %}
-
+<!--    CHECK AND COMPARE LOGIC-->
+    <div class="text-center">
+        {% if missing_ingredients or partly_missing_ingredients.items %}
+            <p class="lead text-muted">Oops... looks like you don't have enough ingredients in your pantry.</p>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-5 mx-auto">
+                {% if missing_ingredients %}
+                    <h5 class="fw-light">What you don't have at all:</h5>
+                    {% for missing_ingredient in missing_ingredients %}
+                        <li class="text-muted">
+                            {{ missing_ingredient }}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">There is no completely missing ingredients!</p>
+                {% endif %}
+        </div>
+        <div class="col-5 mx-auto">
+                {% if partly_missing_ingredients.items %}
+                    <h5 class="fw-light">Partly missing ingredients:</h5>
+                    {% for key, values in partly_missing_ingredients.items %}
+                             <li class="text-muted">
+                                 {{ key }} {{ values }}
+                             </li>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">There is no partly missing ingredients!</p>
+                {% endif %}
+        </div>
+        <div class="col-1"></div>
+        {% endif %}
+    </div>
+<!--CREATING SHOPPING LIST-->
+    <div class="row text-center">
+        <div class="col mx-auto">
+            {% if missing_ingredients or partly_missing_ingredients.items %}
+                <p class="lead text-muted">Do you wan't to print out a list of things you need to buy?
+                    Click <b>here</b>...
+<!--                    NOTE TO SELF: brak logiki tworzenia pliku-->
+<!--UPDATING: SUBSTRACT THE INGREDIENTS FROM PANTRY-->
+            {% else %}
+            <p class="lead text-muted"><b>Great!</b> It looks like you have <b>all the ingredients</b>
+                needed to make this recipe!</p>
+            <p class="lead text-muted">Click <a href="{% url 'recipes:pantry-subtract' recipe.id %}">HERE</a>
+                to remove from your pantry everything that will be consumed.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!--REDIRECTING-->
+<footer class="container bg-light text-center">
+    <div class="row row-cols-2 g-3">
+        <div class="col">
+            <hr>
+            <p class="lead text-muted"><b>Want to keep looking?</b>
+              No problem, let's go back to the
+                <a href="{% url 'recipes:recipe-list' %}">recipe list</a>!</p>
+        </div>
+    </div>
+</footer>
 
 {% endblock %}

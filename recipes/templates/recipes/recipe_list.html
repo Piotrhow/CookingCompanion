@@ -4,26 +4,35 @@
 {% block recipe_list %}
 
 <div class="py-1 text-center bg-light container">
-    <div class="col-md-8 mx-auto">
-        <h1 class="display-4">Recipe list</h1>
-        <p class="lead text-muted">Find a recipe you like, and let CookingCompanion help you check
-        <br>if you've got what is needed to prepare it: <br></p>
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <h1 class="display-4">Recipe list</h1>
+            <p class="lead text-muted">Find a recipe you like, and let CookingCompanion help you check
+            <br>if you've got what is needed to prepare it. <br></p>
+            <hr>
 <!--        <i>NOTE TO SELF: tu doddać pasek z wyszukiwaniem?</i>-->
-        {% for recipe in recipe_list %}
-        <div class="img-one">
-            <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
-                <img id="redirectimg"
-                     class="rounded"
-                     src="{{ recipe.picture.url }} "
-                     style="cursor: pointer;width:180px;height:120px;">
-                <p class="lead text-muted"><b>{{ recipe.name }}</b></p>
-            </a>
         </div>
-          {% endfor %}
+    </div>
+    <div class="row">
+        <!--DISPLAY RECIPE LIST IN LOOP-->
+        {% for recipe in recipe_list %}
+            <div class="col-4">
+                <div class="img-one">
+                    <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
+                        <img id="redirectimg"
+                             class="rounded"
+                             src="{{ recipe.picture.url }} "
+                             style="cursor: pointer;width:180px;height:120px;">
+                        <p class="lead text-muted"><b>{{ recipe.name }}</b></p>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 
-<div class="py-1 text-center bg-light container">
+<!--FOOTER WITH REDIRECTING TO THE PANTRY VIEW-->
+<footer class="py-1 text-center bg-light container">
     <hr>
     <h5 class="lead text-muted">
         <div class="fw-light">
@@ -32,8 +41,6 @@
             <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-info">Go to pantry</button></a>
         </div>
     </h5>
-</div>
-
-
+</footer>
 
 {% endblock %}
