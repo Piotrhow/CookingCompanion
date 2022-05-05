@@ -2,3 +2,8 @@ div.a {
   text-transform: uppercase;
   font-weight: bold;
 }
+
+div.absolute {
+  position: absolute;
+  bottom: 10px;
+}

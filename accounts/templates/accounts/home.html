@@ -1,24 +1,29 @@
 {% extends "accounts/base.html" %}
 {% block title %} Home Page {% endblock title%}
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-4">Welcome</h1>
-        <p class="lead">
-            This is a <b>intelligent</b> recipe book and it's called <b>Cooking Companion</b>.<br>
-            You can store your ingredients there and our app will help you with choosing a recipe to do.
-        </p>
-        <hr class="my-4">
+    <div class="jumbotron bg-light">
+        <div class="container">
+            <h1 class="display-4">Welcome</h1>
+            <p class="lead">
+                This is a <b>intelligent</b> recipe book and it's called <b>Cooking Companion</b>.<br>
+                You can store your ingredients here and our app will help you choose a recipe to prepare.
+            </p>
+
+        </div>
 
         <div class="container">
+            <hr class="my-4">
             <div class="row row-cols-2 g-3">
-                <div class="col">
+                <div class="col-2"></div>
+                <div class="col" style="text-align: left">
                     <h5 class="fw-light">Looking for a recipe?</h5>
                       <p class="lead text-muted">Go to <a href="{% url 'recipes:recipe-list' %}">recipe list</a>!</p>
                 </div>
-                <div class="col">
-                    <h5 class="fw-light">Check out your products?</h5>
+                <div class="col" style="text-align: right">
+                    <h5 class="fw-light">Check out your products!</h5>
                       <p class="lead text-muted">Go to your <a href="{% url 'core:pantry-detail' %}">pantry</a>!</p>
                 </div>
+                <div class="col-2"></div>
             </div>
         </div>
 

@@ -3,8 +3,8 @@
 
 {% block recipe_list %}
 
-<div class="py-1 text-center bg-light container">
-    <div class="row">
+<section class="py-2 text-center bg-light container-fluid">
+    <div class="row py-lg-2">
         <div class="col-12 mx-auto">
             <h1 class="display-4">Recipe list</h1>
             <p class="lead text-muted">Find a recipe you like, and let CookingCompanion help you check
@@ -13,32 +13,44 @@
 <!--        <i>NOTE TO SELF: tu doddać pasek z wyszukiwaniem?</i>-->
         </div>
     </div>
-    <div class="row">
+</section>
+
+
+<div class="album py-3 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <!--DISPLAY RECIPE LIST IN LOOP-->
         {% for recipe in recipe_list %}
-            <div class="col-4">
-                <div class="img-one">
+            <div class="col-4 mx-auto">
+                <div class="card shadow-sm">
                     <a href="{% url 'recipes:recipe-detail' recipe.pk %}" target="blank">
                         <img id="redirectimg"
-                             class="rounded"
+                             class="bd-placeholder-img card-img-top"
+                             width="100%" height="225"
                              src="{{ recipe.picture.url }} "
-                             style="cursor: pointer;width:180px;height:120px;">
-                        <p class="lead text-muted"><b>{{ recipe.name }}</b></p>
+                             style="cursor: pointer">
                     </a>
+                    <div class="card-body">
+                        <p class="lead text-muted"><b>{{ recipe.name }}</b></p>
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+    </div>
 </div>
+
 
 <!--FOOTER WITH REDIRECTING TO THE PANTRY VIEW-->
 <footer class="py-1 text-center bg-light container">
     <hr>
     <h5 class="lead text-muted">
         <div class="fw-light">
-            <p><b>Don't know what to cook?</b> With CookingCompanion it's not a problem!<br>
-            Just pick the ingredients you want to use, and we will suggest something for you:</p>
-            <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-info">Go to pantry</button></a>
+            <p class="lead text-muted"><b>Don't know what to cook?</b><br>
+                    With CookingCompanion it's not a problem!<br>
+                    Just pick the ingredients you want to use, and we will suggest something for you:</p>
+                    <a href="{% url 'core:pantry-detail-form' %}">
+                        <button type="button" class="btn btn-sm btn-outline-dark">Go to pantry</button></a>
         </div>
     </h5>
 </footer>
