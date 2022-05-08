@@ -35,9 +35,7 @@
 <!-- A plugin for password show/hide  -->
    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
-
-
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+<!--    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>-->
 
 
 
@@ -90,10 +88,9 @@
             </div>
         </div>
     </nav>
-</header>
-    <!--Any flash messages pop up in any page because this is the base template-->
+        <!--Any flash messages pop up in any page because this is the base template-->
     {% if messages %}
-      <div class="alert alert-dismissible" role="alert">
+      <div class="alert alert-dismissible bg-light" role="alert">
         {% for message in messages %}
           <div class="alert alert-{{ message.tags }}">{{ message }}</div>
         {% endfor %}
@@ -102,21 +99,22 @@
         </button>
       </div>
     {% endif %}
+</header>
 
 <main>
-<div class="py-1 text-center bg-light container-fluid">
-{% block content %}{% endblock %}
-</div>
+    <div class="py-1 text-center bg-light container-fluid">
+    {% block content %}{% endblock %}
+    </div>
 </main>
 
-
-<footer class="text-muted py-4">
+<footer class="text-muted py-4 bg-light" >
   <div class="container" >
     <div class="d-flex justify-content-between align-items-center" >
-        <small class="mb-0">This is CookingCompanion 1.0 - powered by KB & PH for SDA.<br>
-        Project was designed using &copy; Bootstrap!</small>
+        <small class="mb-0">This is CookingCompanion 1.0 - powered by KB & PH for SDA. Project was designed using &copy; Bootstrap!</small>
         <small class="float-end mb-1 fw-light">
-        <a href="#">Back to top</a>
+        <a href="#"
+           style="position: fixed; bottom: 10px; right:15px">
+            <button class="btn btn-outline-dark btn-sm">^</button></a>
         </small>
     </div>
   </div>
