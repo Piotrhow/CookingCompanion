@@ -18,11 +18,11 @@
                 Back to pantry view</button>
         </a>
         <hr>
-        <p class="lead text-muted">Okay, let's see what you can cook with that...</p>
+        <p class="lead"><b>Okay, let's see what you can cook with that...</b></p>
 </div>
 
 <!--LIST OF SORTED RECIPES-->
-<div class="album py-3 bg-light">
+<div class="album py-4 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for key, values in sorted_recipes.items %}
@@ -36,7 +36,7 @@
                                      style="cursor: pointer">
                             </a>
                         <div class="card-body">
-                            <p class="card-text lead text-muted"><b>{{ key }}</b></p>
+                            <p class="card-text lead"><b>{{ key }}</b></p>
                         </div>
                     </div>
                 </div>

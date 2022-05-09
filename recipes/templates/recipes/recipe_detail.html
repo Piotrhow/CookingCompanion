@@ -11,12 +11,11 @@
     </div>
     <div class="row">
     <!--IMAGE DISPLAY-->
-        <div class="text-center">
+        <div class="text-center" style="margin-right: auto; margin-left: auto;">
             <img id="redirectimg"
                  class="img-fluid"
                  width="80%"
-                 src="{{ recipe.picture.url }} "
-                 style="cursor: pointer;">
+                 src="{{ recipe.picture.url }} ">
         </div>
     </div>
     <hr>
@@ -26,7 +25,7 @@
 <div class="py-1 bg-light container">
     <div class="row" style="text-align: left">
         <div class="col-4 mx-auto">
-            <h4 class="fw-light">Ingredients:</h1>
+            <h4 class="fw-light">Ingredients:</h4>
             <ul>
               {% for recipe_ingredient in recipe_ingredients %}
                   <li class="text-muted">
