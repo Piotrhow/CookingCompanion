@@ -10,21 +10,23 @@
             <div class="fw-light">
                 Just pick the ingredients you want to use, and we will suggest something for you:</p>
                 <a href="{% url 'core:pantry-detail' %}">
-                    <button type="button" class="btn btn-sm btn-secondary">
-                        Disable checkboxes</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Disable checkboxes</button>
                 </a>
-<!--                NOTE TO SELF: moze select all dodac??-->
             </div>
         </h6>
       </div>
     </div>
   </section>
 
+<!--                NOTE TO SELF: moze select all dodac??-->
+
 
 <!--DISPLAY THE PANTRY INGREDIENTS IN THE USER'S PANTRY, DIVIDED BY CATEGORY, CHECKBOXES-->
 <div class="album py-3 bg-light">
     <form method="POST" class="form-inline-center" role="form">{% csrf_token %}
     <div class="container">
+        <label class="lead">Select All </label>
+        <input type="checkbox" id="select-all" class="btn btn-sm btn-dark">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for key, value in ingredient_fits_category.items %}
             <div class="col-4">
@@ -40,7 +42,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                     {{ val.ingredient.name }} {{ val.quantity }} {{ val.ingredient.unit }}
                                         <div class="btn-group" style="margin-right: 0">
-                                            <input type="checkbox" name="ingredients_check[]" value="{{ val.id }}" class="form-check-input-inline me-1" >
+                                            <input type="checkbox" id="ing_check" name="ingredients_check[]" value="{{ val.id }}" class="form-check-input-inline me-1" >
                                         </div>
                                     </div>
                                     </p>
@@ -51,7 +53,17 @@
             </div>
             {% endfor %}
         </div>
+
     </div>
+
+        <script>
+            document.getElementById('select-all').onclick = function() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+}
+        </script>
 
 <!--SUBMIT-->
 <div class="py-1 text-center container">
