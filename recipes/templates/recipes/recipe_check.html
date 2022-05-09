@@ -48,7 +48,7 @@
 <!--    CHECK AND COMPARE LOGIC-->
     <div class="text-center">
         {% if missing_ingredients or partly_missing_ingredients.items %}
-            <p class="lead text-muted">Oops... looks like you don't have enough ingredients to prepare this recipe.</p>
+            <p class="lead text-danger">Oops... looks like you don't have enough ingredients to prepare this recipe.</p>
     </div>
     <div class="row">
         <div class="col-1"></div>
@@ -56,7 +56,7 @@
             <h5 class="fw-light">What you don't have at all:</h5>
                 {% if missing_ingredients %}
                     {% for missing_ingredient in missing_ingredients %}
-                        <p class="list-group text-muted">
+                        <p class="list-group text-danger">
                             {{ missing_ingredient.ingredient.name }}
                             {{ missing_ingredient.quantity }}
                             {{ missing_ingredient.ingredient.unit }}
@@ -70,7 +70,7 @@
             <h5 class="fw-light">Partly missing ingredients:</h5>
                 {% if partly_missing_ingredients.items %}
                     {% for key, values in partly_missing_ingredients.items %}
-                        <p class="list-group text-muted">
+                        <p class="list-group text-danger">
                             {{ key.name }}
                             {{ values }}
                             {{ key.unit }}
@@ -88,12 +88,12 @@
         <div class="col mx-auto">
             {% if missing_ingredients or partly_missing_ingredients.items %}
             <br>
-<!--            <p class="lead text-muted">Do you wan't to print out a <b>SHOPPING LIST</b>?-->
-<!--                    Click >here<..-->
+            <p class="lead text-muted">Do you wan't to print out a <b>SHOPPING LIST</b>?
+                    Click <a href="{% url 'recipes:recipe-shoppinglist' recipe.id %}">here</a>
 <!--                    NOTE TO SELF: brak logiki EXPORTU pliku-->
 <!--UPDATING: SUBSTRACT THE INGREDIENTS FROM PANTRY-->
             {% else %}
-            <p class="lead text-muted"><b>Great!</b> You have <b>all the ingredients</b>
+            <p class="lead text-success"><b>Great!</b> You have <b>all the ingredients</b>
                 needed to make this recipe!</p>
             <p class="lead text-muted">Click <a href="{% url 'recipes:pantry-subtract' recipe.id %}">here</a>
                 to remove from your pantry everything that will be consumed.</p>
