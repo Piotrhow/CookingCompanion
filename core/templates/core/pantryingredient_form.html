@@ -24,7 +24,7 @@
 <hr>
 <!--KOMUNIKAT O WPROWADZENIU BŁĘDNEJ LUB ISTNIEJĄCEJ JUZ WARTOŚCI-->
     {% if integrityerror_flag == 1 %}
-      <br><p class="lead text-muted"> {{ duplicate_msg }} </p>
+      <br><p class="lead text-danger"> {{ duplicate_msg }} </p>
     {% elif flag == 2 %}
       <br><p class="lead text-muted"> {{ wrong_name_msg }} </p>
     {% endif %}

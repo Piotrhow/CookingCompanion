@@ -12,13 +12,20 @@
         <b>Copy the text to your NoteApp(e.g. Google Keep) and take it with you shopping!</b></p>
     <div class="row">
         <div class="col-6 container">
-           {% for key,values in missing_ingredients.items %}
+           {% for key,values in partly_missing_ingredients.items %}
                   <p class="lead">
                     {{ key.name }}
                     {{ values }}
                     {{ key.unit }}
                   </p>
-              {% endfor %}
+            {% endfor %}
+            {% for missing_ingredient in missing_ingredients %}
+                <p class="lead">
+                    {{ missing_ingredient.ingredient.name }}
+                    {{ missing_ingredient.quantity }}
+                    {{ missing_ingredient.ingredient.unit }}
+                </p>
+            {% endfor %}
         </div>
     </div>
 
