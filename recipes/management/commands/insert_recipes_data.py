@@ -4,7 +4,7 @@ from recipes.models import Recipe, RecipeIngredient, Ingredient
 
 def populate_recipes():
 	Recipe.objects.create(
-		name="Margherita Pizza",
+		name="Pizza Margherita",
 		picture="recipe_images/pizza.jpg",
 		description='''
 		<b>Prepare Pizza Dough: </b>
@@ -65,7 +65,7 @@ def populate_recipes():
 		'''
 	)
 	Recipe.objects.create(
-		name="Easy Three-Ingredient Tomato Soup",
+		name="Easy Tomato Soup",
 		picture="recipe_images/tomato_soup.jpg",
 		description='''
 		Melt butter over medium heat in a Dutch oven or large saucepan.
@@ -81,7 +81,7 @@ def populate_recipes():
 	'''
 	)
 	Recipe.objects.create(
-		name="Fluffy Pancakes from Scratch",
+		name="Fluffy Pancakes",
 		picture="recipe_images/pancakes.jpg",
 		description='''
 		<b>MAKE BATTER</b>
@@ -108,6 +108,54 @@ def populate_recipes():
 		This takes about 2 minutes. Once flipped, cook another 1 to 2 minutes or until lightly browned and cooked in 
 		the middle. Serve immediately with warm syrup, butter, and berries.
 		'''
+	)
+
+	Recipe.objects.create(
+		name="Lorem ipsum 1",
+		picture="recipe_def.jpg",
+		description='''
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+		labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+		aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+		eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
+		mollit anim id est laborum.
+		'''
+	)
+
+	Recipe.objects.create(
+		name="Lorem ipsum 2",
+		picture="recipe_def.jpg",
+		description='''
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+			labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+			aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+			eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
+			mollit anim id est laborum.
+			'''
+	)
+
+	Recipe.objects.create(
+		name="Lorem ipsum 3",
+		picture="recipe_def.jpg",
+		description='''
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+			labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+			aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+			eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
+			mollit anim id est laborum.
+			'''
+	)
+
+	Recipe.objects.create(
+		name="Lorem ipsum 4",
+		picture="recipe_def.jpg",
+		description='''
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+			labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+			aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+			eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
+			mollit anim id est laborum.
+			'''
 	)
 
 
@@ -150,7 +198,7 @@ def populate_recipeingredients():
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=water, quantity="300")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=salt, quantity="5")
 	#
-	recipe = Recipe.objects.get(name="Fluffy Pancakes from Scratch")
+	recipe = Recipe.objects.get(name="Fluffy Pancakes")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=flour, quantity="200")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=sugar, quantity="20")
 	RecipeIngredient.objects.create(recipe=recipe, ingredient=baking_powder, quantity="10")

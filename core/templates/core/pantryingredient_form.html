@@ -5,13 +5,18 @@
 <!--BUTTONY DO WYBRANIA KATEGORII-->
 <section class="py-1 bg-light text-center container">
     <br>
-    <a href="{% url 'core:pantry-detail' %}" ><button class="btn btn-outline-danger btn-sm">Back to pantry view</button></a>
+    <a href="{% url 'core:pantry-detail' %}" >
+        <button class="btn btn-secondary btn-sm">Back to pantry view</button>
+    </a>
     <div class="row py-lg-5">
         <div class="col-md-10 mx-auto">
         <h5 class="fw-light">Choose a category:</h5>
             <form class="form-inline-center" role="form">
             {% for category in categories_all %}
-                <input type="submit" value="{{category.name}}" name="ingredient_category" class="btn btn-outline-secondary btn-sm">
+                <input type="submit"
+                       value="{{category.name}}"
+                       name="ingredient_category"
+                       class="btn btn-outline-secondary btn-sm">
             {% endfor %}
             </form>
       </div>
@@ -32,7 +37,11 @@
         <h5 class="fw-light">Choose an ingredient:</h5>
             <form class="form-inline-center" role="form">
             {% for ingredient in ingredients_all %}
-                <button type="submit" value="{{ingredient.id}}" name="ingredient_id" class="btn btn-outline-secondary btn-sm">{{ ingredient }}</button>
+                <button type="submit"
+                        value="{{ingredient.id}}"
+                        name="ingredient_id" class="btn btn-outline-secondary btn-sm">
+                    {{ ingredient }}
+                </button>
             {% endfor %}
             </form>
       </div>
@@ -47,7 +56,7 @@
                 <input type="number" name="quantity" value="0" placeholder="0,00">
             </div>
             <br>
-            <input type="submit" value="Add" class="btn btn-info btn-sm">
+            <input type="submit" value="Add" class="btn btn-dark btn-sm">
         </form>
     {% endif %}
 

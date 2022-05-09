@@ -8,7 +8,7 @@ class Recipe(models.Model):
 	description = models.TextField()
 	added = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
-	picture = models.ImageField(default='recipe_default.jpg', upload_to='recipe_images')
+	picture = models.ImageField(default='recipe_def.jpg', upload_to='recipe_images')
 	ingredients = models.ManyToManyField(
 		'Ingredient',
 		through='RecipeIngredient',

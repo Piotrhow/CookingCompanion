@@ -1,32 +1,27 @@
 {% extends "recipes/base.html" %}
-{% block title %} Pantry update {% endblock title %}
+{% block title %} Shopping List {% endblock title %}
 
-{% block pantry_subtract %}
+{% block recipe_shoppinglist %}
 
 <div class="py-1 text-center bg-light">
-    <h1 class="display-4">Enjoy your <br><b>{{recipe.name}}</b> !</h1>
-        <div class="img-one">
-        <img id="redirectimg"
-             class="rounded"
-             src="{{ recipe.picture.url }} "
-             style="cursor: pointer;width:180px;height:120px;">
-      </div>
+    <h1 class="display-4">Your shopping list...</h1>
 </div>
-<!--INFO WHAT HAS BEEN REMOVED-->
+<!--SHOPPING LIST-->
 <div class="py-1 text-center bg-light">
-    <p class="lead text-muted">
-        <b>We removed those ingredients from your pantry:</b></p>
+    <p class="lead ">
+        <b>Copy the text to your NoteApp(e.g. Google Keep) and take it with you shopping!</b></p>
     <div class="row">
         <div class="col-6 container">
-            <ul style="list-style-type: none">
-              {% for recipe_ingredient in recipe_ingredients %}
-                  <li class="text-muted">
-                    {{ recipe_ingredient }}
-                  </li>
+           {% for key,values in missing_ingredients.items %}
+                  <p class="lead">
+                    {{ key.name }}
+                    {{ values }}
+                    {{ key.unit }}
+                  </p>
               {% endfor %}
-            </ul>
         </div>
     </div>
+
 <!--    REDIRECTING-->
     <div class="row">
         <div class="col">
