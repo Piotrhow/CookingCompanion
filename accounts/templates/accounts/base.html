@@ -88,6 +88,10 @@
             </div>
         </div>
     </nav>
+    <button class="btn btn-outline-light btn-sm"
+    onclick="history.back()"
+    style="position: fixed; top: 10px; right:15px">Go Back</button>
+</header>
         <!--Any flash messages pop up in any page because this is the base template-->
     {% if messages %}
       <div class="alert alert-dismissible bg-light" role="alert">
@@ -99,7 +103,6 @@
         </button>
       </div>
     {% endif %}
-</header>
 
 <main>
     <div class="py-1 text-center bg-light container-fluid">
