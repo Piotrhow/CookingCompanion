@@ -197,20 +197,23 @@ def pantry_detail_form(request):
 	pantry = get_object_or_404(Pantry, user_id=id)
 	pantryingredients_all = PantryIngredient.objects.filter(pantry_id=pantry.id)
 	categories_all = IngredientCategory.objects.all()
+	choose_sth_msg = request.COOKIES.get("choose_sth_msg", 0)
 
 	# POBIERANIE Z CHECKBOX'ÓW LISTY ID - przekazane na następny widok metodą POST
 	if request.method == "POST":
 		# try:
 		ingredients_chosen = (request.POST.getlist('ingredients_check[]'))  # pobieranie od usera
-		res = redirect('core:pantry-check')
-		res.set_cookie("ingredients_chosen", ingredients_chosen)
-		return res
+		if ingredients_chosen:
+			res = redirect('core:pantry-check')
+			res.set_cookie("ingredients_chosen", ingredients_chosen)
+			return res
+
 		# except ValueError:
 		# 	valueerror_flag = 1
 
-		# res = redirect('core:pantry-detail-form')
-		# res.set_cookie("valueerror_flag", valueerror_flag)
-		# return res
+		res = redirect('core:pantry-detail-form')
+		choose_sth_msg = res.set_cookie("choose_sth_msg", CHOOSE_STH_MSG)
+		return res
 
 	else:
 		# Podział pantryingredients na kategorie
@@ -225,7 +228,7 @@ def pantry_detail_form(request):
 			'core/pantry_detail_form.html',
 			context={
 				'empty_msg': EMPTY_MSG,
-				'choose_sth_msg': CHOOSE_STH_MSG,
+				'choose_sth_msg': choose_sth_msg,
 				'pantry_ingredients': pantryingredients_all,
 				'categories_all': categories_all,
 				'ingredient_fits_category': dict,
@@ -234,6 +237,7 @@ def pantry_detail_form(request):
 
 		res.delete_cookie("ingredients_chosen")
 		res.delete_cookie("valuerror_flag")
+		res.delete_cookie("choose_sth_msg")
 
 		return res
 

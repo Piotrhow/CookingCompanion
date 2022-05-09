@@ -56,22 +56,22 @@
 
     </div>
 
-        <script>
-            document.getElementById('select-all').onclick = function() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (var checkbox of checkboxes) {
-        checkbox.checked = this.checked;
+<script>
+    document.getElementById('select-all').onclick = function() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
     }
-}
-        </script>
+</script>
 
 <!--SUBMIT-->
 <div class="py-1 text-center container">
         <h5 class="lead text-muted">
 <!--            <i>NOTE TO SELF: jak dodać info że nic nie wybrano...?</i>-->
-<!--            {% if valueerror_flag == 1 %}-->
-<!--            <p>{{ choose_sth_msg }}</p>-->
-<!--            {% endif %}-->
+            {% if choose_sth_msg != 0 %}
+            <p class="text-danger">{{ choose_sth_msg }}</p>
+            {% endif %}
             <div class="fw-light">
                 <input type="submit" value="Check out recipes" class="btn btn-dark">
             </div>
