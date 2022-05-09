@@ -4,19 +4,39 @@
 {% block recipe_list %}
 
 <section class="py-2 text-center bg-light container-fluid">
-    <div class="row py-lg-2">
+    <div class="row py-lg-2 g-2">
         <div class="col-12 mx-auto">
             <h1 class="display-4">Recipe list</h1>
-            <p class="lead text-muted">Find a recipe you like, and let CookingCompanion help you check
+            <p class="lead">Find a recipe you like, and let CookingCompanion help you check
             <br>if you've got what is needed to prepare it. <br></p>
-            <hr>
 <!--        <i>NOTE TO SELF: tu doddać pasek z wyszukiwaniem?</i>-->
+            <div class="container">
+              <div class="input-group rounded" >
+                  <form method="GET"
+                        class="form-inline-center"
+                        style="margin-left: auto; margin-right: auto; width: 100%"
+                        >
+                      {% if search_input %}
+                        <input type="search"
+                           class="form-control rounded"
+                           placeholder="{{search_input}}..."
+                           name="search_input"/>
+                      <p class="lead text-muted"> You are looking for: "{{ search_input }}" ...</p>
+                      {% else %}
+                      <input type="search"
+                           class="form-control rounded"
+                           placeholder="Type key words to find a recipe by name..."
+                           name="search_input"/>
+                      {% endif %}
+                  </form>
+              </div>
+            </div>
         </div>
     </div>
 </section>
 
 
-<div class="album py-3 bg-light">
+<div class="album py-3 bg-light" >
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <!--DISPLAY RECIPE LIST IN LOOP-->
@@ -31,18 +51,17 @@
                              style="cursor: pointer">
                     </a>
                     <div class="card-body">
-                        <p class="lead text-muted"><b>{{ recipe.name }}</b></p>
+                        <p class="lead" name="{{ recipe.name }}"><b>{{ recipe.name }}</b></p>
                     </div>
-                </div>
+                </div><br>
             </div>
         {% endfor %}
     </div>
-    </div>
+</div>
 </div>
 
-
 <!--FOOTER WITH REDIRECTING TO THE PANTRY VIEW-->
-<footer class="py-1 text-center bg-light container">
+<div class="py-1 text-center bg-light container">
     <hr>
     <h5 class="lead text-muted">
         <div class="fw-light">
@@ -50,9 +69,10 @@
                     With CookingCompanion it's not a problem!<br>
                     Just pick the ingredients you want to use, and we will suggest something for you:</p>
                     <a href="{% url 'core:pantry-detail-form' %}">
-                        <button type="button" class="btn btn-sm btn-outline-dark">Go to pantry</button></a>
+                        <button type="button" class="btn btn-sm btn-outline-primary">Go to pantry</button></a>
         </div>
     </h5>
-</footer>
+</div>
+
 
 {% endblock %}

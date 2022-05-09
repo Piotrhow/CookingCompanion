@@ -11,6 +11,36 @@ from recipes.models import Ingredient, Recipe, RecipeIngredient
 class RecipeListView(ListView):
     model = Recipe
 
+def recipe_list(request):
+    recipes = Recipe.objects.all()
+    search_input = request.GET.get("search_input")
+
+    if search_input:
+        # search_input = request.POST.get("search_input")  # pobieranie od usera
+        recipes_filter = Recipe.objects.filter(name__contains=search_input)
+        res = render(
+            request,
+            'recipes/recipe_list.html',
+            context={
+                'recipe_list': recipes_filter,
+                'search_input': search_input,
+            }
+        )
+        res.set_cookie("search_input", search_input)
+        print(search_input)
+        return res
+
+    res = render(
+        request,
+        'recipes/recipe_list.html',
+        context={
+            'recipe_list': recipes,
+        }
+    )
+    res.delete_cookie("search_input")
+
+    return res
+
 
 def recipe_detail(request, id):
     r = get_object_or_404(Recipe, id=id)
