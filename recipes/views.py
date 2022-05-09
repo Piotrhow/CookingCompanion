@@ -137,8 +137,8 @@ def recipe_shoppinglist(request, id):
             if res < 0:
                 missing[pantry_ingred.ingredient] = res * -1        # if calculated < 0 save to dict
             residual = residual.exclude(id=recip_ingred.id)
-            for residual_item in residual:
-                missing[residual_item.ingredient] = residual_item.quantity
+        for residual_item in residual:
+            missing[residual_item.ingredient] = residual_item.quantity
 
     print(missing)
 
