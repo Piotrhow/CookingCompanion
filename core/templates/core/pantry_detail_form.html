@@ -1,0 +1,89 @@
+
+{% extends "core/base.html" %}
+{% block title %} Pantry of {{user.username}}  {% endblock title%}
+{% block pantry_detail %}
+
+  <section class="py-2 text-center bg-light container-fluid">
+    <div class="row py-lg-2">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h6 class="lead ">
+            <div class="fw-light">
+                Just pick the ingredients you want to use, and we will suggest something for you:</p>
+                <a href="{% url 'core:pantry-detail' %}">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Disable checkboxes</button>
+                </a>
+            </div>
+        </h6>
+      </div>
+    </div>
+  </section>
+
+<!--                NOTE TO SELF: moze select all dodac??-->
+
+
+<!--DISPLAY THE PANTRY INGREDIENTS IN THE USER'S PANTRY, DIVIDED BY CATEGORY, CHECKBOXES-->
+<div class="album py-3 bg-light">
+    <form method="POST" class="form-inline-center" role="form">{% csrf_token %}
+    <div class="container">
+        <label class="lead">Select All </label>
+        <input type="checkbox" id="select-all" class="btn btn-sm btn-dark">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for key, value in ingredient_fits_category.items %}
+            <div class="col-4">
+                <div class="card shadow-sm" >
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="lead" style="text-align: left">
+                                <b>{{ key }}</b>
+                            </h3>
+                          </div><hr>
+                        {% for val in value %}
+                                <p class="list-group">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    {{ val.ingredient.name }} {{ val.quantity }} {{ val.ingredient.unit }}
+                                        <div class="btn-group" style="margin-right: 0">
+                                            <input type="checkbox" id="ing_check" name="ingredients_check[]" value="{{ val.id }}" class="form-check-input-inline me-1" >
+                                        </div>
+                                    </div>
+                                    </p>
+
+                        {% endfor %}
+                    </div>
+                </div><br>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+<script>
+    document.getElementById('select-all').onclick = function() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    }
+</script>
+
+<!--SUBMIT-->
+<div class="py-1 text-center container">
+        <h5 class="lead text-muted">
+<!--            <i>NOTE TO SELF: jak dodać info że nic nie wybrano...?</i>-->
+            {% if choose_sth_msg != 0 %}
+            <p class="text-danger">{{ choose_sth_msg }}</p>
+            {% endif %}
+            <div class="fw-light">
+                <input type="submit" value="Check out recipes" class="btn btn-dark">
+            </div>
+        </h5>
+    </div>
+
+</form>
+</div>
+
+
+
+
+
+{% endblock %}
+

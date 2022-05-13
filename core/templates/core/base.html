@@ -1,0 +1,133 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+      <title>{% block title %}{% endblock %}</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+      <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--Font awesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+
+    <!-- CSS only -->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- A plugin for password show/hide  -->
+    <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #1e1e1e">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="navbar-text mb-0 h4"> CC CookingCompanion </p>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="col-md-12">
+                        <div class="navbar-nav ml-auto">
+                            <a class="navbar-brand" href="/">
+                                <strong>Home</strong>
+                            </a>
+                            {% if user.is_authenticated %}
+                            <a class="nav-link active" aria-current="page" href="{% url 'users-profile' %}" >Profile</a>
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                            <a class="nav-link" href="{% url 'login' %}">Sign in</a>
+                            {% endif %}
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+        <button class="btn btn-outline-light btn-sm"
+            onclick="history.back()"
+            style="position: fixed; top: 10px; right:15px">Go Back</button>
+</header>
+    <!--Any flash messages pop up in any page because this is the base template-->
+    {% if messages %}
+      <div class="alert alert-dismissible" role="alert">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endif %}
+
+<main class="bg-light">
+<div class="py-1 text-center bg-light container-fluid">
+  {% block pantry_detail %}{% endblock %}
+  {% block pantryingredient_delete %}{% endblock %}
+  {% block pantryingredient_form %}{% endblock %}
+  {% block pantryingredient_form_update %}{% endblock %}
+  {% block pantryingredient_check %}{% endblock %}
+</div>
+</main>
+
+
+<footer class="text-muted py-4 bg-light" >
+  <div class="container" >
+    <div class="d-flex justify-content-between align-items-center" >
+        <small class="mb-0">This is CookingCompanion 1.0 - powered by KB & PH for SDA. Project was designed using &copy; Bootstrap!</small>
+        <small class="float-end mb-1 fw-light">
+        <a href="#"
+           style="position: fixed; bottom: 10px; right:15px">
+            <button class="btn btn-outline-dark btn-sm">^</button></a>
+        </small>
+    </div>
+  </div>
+</footer>
+
+
+  </body>
+</html>
