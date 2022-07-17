@@ -1,0 +1,87 @@
+{% extends "core/base.html" %}
+{% block title %} Pantry of {{user.username}}  {% endblock title%}
+{% block pantry_detail %}
+
+
+  <section class="py-2 text-center bg-light container-fluid">
+    <div class="row py-lg-2">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="display-4">Welcome to your pantry !</h1>
+        {% if ingredient_fits_category %}
+            <p class="lead">These are the products you've got so far. <br></p>
+            <a href="{% url 'core:delete-pantry' %}">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Delete all from pantry</button></a>
+        {% else %}
+            <p class="lead text-muted">{{ empty_msg }}</p>
+        {% endif %}
+            <a href="{% url 'core:create' %}">
+                <button class="btn btn-sm btn-dark">Add something new</button>
+            </a>
+      </div>
+    </div>
+  </section>
+
+<!--DISPLAY THE PANTRY INGREDIENTS IN THE USER'S PANTRY, DIVIDED BY CATEGORY-->
+<div class="album py-3 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for key, value in ingredient_fits_category.items %}
+            <div class="col-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="lead" style="text-align: left"><b>{{ key.name }}</b></h3>
+                            <a href="{% url 'core:delete-category' key.id %}">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    Delete category</button>
+                            </a>
+                        </div>
+                        <hr>
+                        {% for val in value %}
+                                <p class="list-group">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    {{ val.ingredient.name }} {{ val.quantity }} {{ val.ingredient.unit }}
+                                        <div class="btn-group" style="margin-right: 0">
+                                           <a href="{% url 'core:update' val.id %}">
+                                                <button type="button" class="btn btn-sm btn-outline-warning">
+                                                    Modify</button>
+                                            </a>
+                                            <a href="{% url 'core:delete' val.id %}">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                    Delete</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </p>
+                        {% endfor %}
+                    </div>
+                </div><br>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    <!--CHECKBOXES OPTION - ENABLING-->
+    <div class="py-1 text-center container">
+        <h6 class="lead text-muted">
+            <div class="fw-light">
+                {% if ingredient_fits_category %}
+                    <hr>
+                    <p class="lead text-muted"><b>Don't know what to cook?</b><br>
+                    With CookingCompanion it's not a problem!<br>
+                    Just pick the ingredients you want to use, and we will suggest something for you:</p>
+                    <a href="{% url 'core:pantry-detail-form' %}">
+                        <button type="button" class="btn btn-sm btn-outline-dark">Enable checkboxes</button></a>
+                {% endif %}
+            </div>
+        </h6>
+    </div>
+
+        <div class="container text-center">
+            <hr>
+            <p class="lead text-muted"><b>Looking for a recipe?</b> Go to <a href="{% url 'recipes:recipe-list' %}">recipe list</a>!</p>
+        </div>
+
+
+
+{% endblock %}

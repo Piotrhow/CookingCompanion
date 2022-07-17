@@ -1,0 +1,23 @@
+{% extends "core/base.html" %}
+{% block title %} Confirm delete {% endblock %}
+{% load static %}
+
+{% block pantryingredient_delete %}
+
+  <section class="py-1 bg-light text-center container">
+    <div class="row py-lg-5">
+      <div class="col-md-8 mx-auto">
+        <h3 class="display-4">Deleting all from your pantry... </h3>
+          <hr>
+          <form method="POST" style="display: inline;">{% csrf_token %}
+              <p class="lead text-muted">Are you sure you want to delete all the ingredients from your pantry ?</p>
+              {% for pantryingredient in pantryingredients %}
+              {% endfor %}
+              <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+          </form>
+                <a href="{% url 'core:pantry-detail' %}"><button class="btn btn-secondary btn-sm">Back to the list</button></a>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

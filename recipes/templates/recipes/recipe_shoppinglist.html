@@ -1,0 +1,45 @@
+{% extends "recipes/base.html" %}
+{% block title %} Shopping List {% endblock title %}
+
+{% block recipe_shoppinglist %}
+
+<div class="py-1 text-center bg-light">
+    <h1 class="display-4">Your shopping list...</h1>
+</div>
+<!--SHOPPING LIST-->
+<div class="py-1 text-center bg-light">
+    <p class="lead ">
+        <b>Copy the text to your NoteApp(e.g. Google Keep) and take it with you shopping!</b></p>
+    <div class="row">
+        <div class="col-6 container">
+           {% for key,values in partly_missing_ingredients.items %}
+                  <p class="lead">
+                    {{ key.name }}
+                    {{ values }}
+                    {{ key.unit }}
+                  </p>
+            {% endfor %}
+            {% for missing_ingredient in missing_ingredients %}
+                <p class="lead">
+                    {{ missing_ingredient.ingredient.name }}
+                    {{ missing_ingredient.quantity }}
+                    {{ missing_ingredient.ingredient.unit }}
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+
+<!--    REDIRECTING-->
+    <div class="row">
+        <div class="col">
+            <hr>
+            <p class="lead">
+                Thank you for using <b>CookingCompanion</b>!
+                We hope you liked it. See you again soon!</p>
+            <a href="{% url 'core:pantry-detail' %}"><button type="button" class="btn btn-sm btn-outline-dark">Go to pantry</button></a>
+            <a href="{% url 'recipes:recipe-list' %}"><button type="button" class="btn btn-sm btn-outline-dark">Go to recipe list</button></a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

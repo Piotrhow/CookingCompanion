@@ -1,0 +1,20 @@
+{% extends "core/base.html" %}
+{% block pantryingredient_form_update %}
+
+<section class="py-1 bg-light text-center container">
+    <div class="row-fluid">
+      <div class="col-md-8 mx-auto">
+        <h3 class="display-4">Modifying an ingredient...</h3><hr>
+          <form method="POST" style="display: inline;">{% csrf_token %}
+            <p class="lead text-muted">Input the new amount of <b>{{ingredient}}</b>:</p>
+              <input type="number" name="quantity" placeholder="{{quantity_old}} {{ingredient.unit.name}}">
+                <hr>
+              <input type="submit" value="Update" class="btn btn-warning btn-sm">
+          </form>
+              <a href="{% url 'core:pantry-detail' %}"><button class="btn btn-secondary btn-sm">Back to the list</button></a>
+          <br>
+        </div>
+      </div>
+</section>
+
+{% endblock %}

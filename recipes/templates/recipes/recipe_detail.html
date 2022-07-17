@@ -1,0 +1,69 @@
+{% extends "recipes/base.html" %}
+{% block title %} {{recipe.name}} {% endblock title%}
+
+{% block recipe_detail %}
+
+<div class="py-2 text-center bg-light container">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <h2 class="display-4"> {{recipe.name}} </h2>
+      </div>
+    </div>
+    <div class="row">
+    <!--IMAGE DISPLAY-->
+        <div class="text-center" style="margin-right: auto; margin-left: auto;">
+            <img id="redirectimg"
+                 class="img-fluid"
+                 width="80%"
+                 src="{{ recipe.picture.url }} ">
+        </div>
+    </div>
+    <hr>
+</div>
+
+<!--RECIPE INGREDIENTS & DESCRIPTION-->
+<div class="py-1 bg-light container">
+    <div class="row" style="text-align: left">
+        <div class="col-4 mx-auto">
+            <h4 class="fw-light">Ingredients:</h4>
+            <ul>
+              {% for recipe_ingredient in recipe_ingredients %}
+                  <li class="text-muted">
+                    <p>
+                        {{ recipe_ingredient.ingredient.name }}
+                        {{ recipe_ingredient.quantity }}
+                        {{ recipe_ingredient.ingredient.unit }}
+                    </p>
+                  </li>
+              {% endfor %}
+            </ul>
+        </div>
+        <div class="col-8 mx-auto">
+            <div class="container">
+                <h4 class="fw-light" >Description:</h4>
+                {% autoescape off %}
+                <p class="text-muted">{{ recipe.description }}</p>
+                {% endautoescape %}
+            </div>
+        </div>
+    </div>
+<hr>
+<!--REDIRECTING-->
+<footer class="container">
+    <div class="row row-cols-2 g-3" >
+        <div class="col-6" style="text-align: left">
+            <h5 class="fw-light">Want to keep looking?</h5>
+              <p class="lead text-muted">No problem, let's go back to the
+                <a href="{% url 'recipes:recipe-list' %}">recipe list</a>
+                  or
+                <a href="{% url 'core:pantry-detail' %}">your pantry</a>!</p>
+        </div>
+        <div class="col-6" style="text-align: right">
+            <h5 class="fw-light" >Like this recipe? Awesome! </h5>
+              <p class="lead text-muted">Let's see what you need to buy to prepare it:
+                <a href="{% url 'recipes:recipe-check' recipe.pk %}">check</a>!</p>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}
