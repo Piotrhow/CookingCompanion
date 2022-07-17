@@ -1,12 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
-from django import views
-from django.urls import reverse
-from urllib.parse import urlencode
 from django.db import IntegrityError
-
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from core.models import Pantry, PantryIngredient
 from recipes.models import Ingredient, IngredientCategory, Recipe, RecipeIngredient
@@ -216,7 +211,7 @@ def pantry_detail_form(request):
 		return res
 
 	else:
-		# Podział pantryingredients na kategorie
+		# pantryingredients to category
 		dict = {}
 		for category in categories_all:
 			ingredient_fits_category = pantryingredients_all.filter(ingredient__category_id=category.id)
@@ -247,14 +242,14 @@ def pantryingredient_check(request):
 	recipes_all = Recipe.objects.all()
 	ingredients_chosen = request.COOKIES.get("ingredients_chosen", 0)
 
-	# oczyszczanie listy
+	# cleaning list
 	x = ingredients_chosen.replace("[]","")
 	x = x.replace("']","")
 	x = x.replace("['","")
 	x = x.replace("', '", " ")
 	ingredients_chosen = x.split()
 
-	# tworzenie listy obiektów wybranych w checbox'ach
+	# make checkbox list
 	array = []
 	for id in ingredients_chosen:
 		ingredient_chosen = PantryIngredient.objects.get(id=id)
@@ -268,7 +263,6 @@ def pantryingredient_check(request):
 		for recipe_ingredient in recipe_ingredients:
 			for ingredient_chosen in ingredients_chosen:
 				if ingredient_chosen.ingredient.id == recipe_ingredient.ingredient.id:
-					print(ingredient_chosen.ingredient.name)
 					recipe_matching += 1
 					if ingredient_chosen.quantity >= recipe_ingredient.quantity:
 						recipe_matching += 1
@@ -285,7 +279,6 @@ def pantryingredient_check(request):
 		for key in matching.keys():
 			if matching[key] == i and matching[key] > 0:
 				sorted_recipes[key] = matching[key]
-	print(sorted_recipes)
 
 	return render(
 		request,
